@@ -186,7 +186,7 @@ Use the `git revert` command to undo previous commits. This is the most common m
 
 The revert command creates a new commit that reverts the changes made by a previous commit.
 
-![Git Revert](images/git-revert.png)
+![Image: Git Revert](images/git-revert.png)
 
 ```bash
 git revert HEAD
@@ -203,7 +203,7 @@ Use the `git reset` command to make the `HEAD` point to a previous commit. You c
 
 Used primarily **to undo local commits that have not yet been pushed to a remote repository**.
 
-![Git Reset](images/git-reset.png)
+![Image: Git Reset](images/git-reset.png)
 
 Three primary modes: `--soft`, `--mixed`, and `--hard`
 
