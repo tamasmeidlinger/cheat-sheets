@@ -1,8 +1,6 @@
-- [Checklist](#checklist)
+- [To-dos](#to-dos)
   - [Git config setup](#git-config-setup)
   - [Look into](#look-into)
-- [Glossary](#glossary)
-  - [Ref (reference)](#ref-reference)
 - [Git Config](#git-config)
   - [Set username and email](#set-username-and-email)
   - [Display settings](#display-settings)
@@ -34,31 +32,34 @@
   - [Rename local and remote branch](#rename-local-and-remote-branch)
   - [Fetching remote branches](#fetching-remote-branches)
   - [Pulling remote branches](#pulling-remote-branches)
+- [Managing Git History](#managing-git-history)
+  - [Amending the last commit](#amending-the-last-commit)
+  - [Rebasing commits](#rebasing-commits)
+  - [Squash commits](#squash-commits)
+  - [Exit rebase](#exit-rebase)
+- [Merging Strategies](#merging-strategies)
+  - [Fast-forward merge vs. non-fast-forward merge](#fast-forward-merge-vs-non-fast-forward-merge)
+  - [Rebase](#rebase)
 
 Main source of reference [nulab](https://nulab.com/learn/software-development/git-tutorial/git-collaboration/integrating-branches/)
 
-
-## Checklist
+## To-dos
 
 ### Git config setup
 
 - [ ] git configs explained
 - [ ] git config files location
+- [ ] git local config
 
 ### Look into
 
 - [ ] Look into tagging
-- [ ] Managing git history
+- [ ] Check if managing git history is done
 - [ ] reflog
 - [ ] stashing
 - [ ] best practices - fetch
 - [ ] best practices - pull
 
-## Glossary
-
-### Ref (reference)
-
-In Git, a **ref (reference)** is a name that points to a commit.
 
 ## Git Config
 
@@ -285,6 +286,19 @@ When Git has identified a conflict, you will find markers added to the file by G
 
 Rebasing moves a sequence of commits from one branch to another by replaying them on top of the target branch.
 
+Switch to the branch you want to update then run:
+
+```bash
+git rebase <branch>
+```
+
+```bash
+git rebase --abort
+```
+
+By adding the `--abort` option, you can exit the rebase operation.
+
+
 ## Remote repository
 
 ### List remote repositories
@@ -399,3 +413,248 @@ However, if there are changes in the local main branch are not present in the re
 A merge commit is automatically created in the local repository when executing a pull. If there is a conflict, you will have to resolve the conflict and commit the merge manually.
 
 ![Image: If there is no conflict, the commit will merge automatically.](images/git-pull-4.png)
+
+## Managing Git History
+
+### Amending the last commit
+
+```bash
+git commit --amend
+```
+
+### Rebasing commits
+
+Rebasing in Git is a process that allows you to move or combine a sequence of commits to a new base commit. This can be particularly useful for integrating changes from one branch into another cleanly.
+
+```bash
+git rebase -i <commit>
+```
+
+Add a commit hash and a list of all commits up to the latest commit will be listed. Find the commit you wish to modify, and change that line from `pick` to `edit` then save and quit.
+
+Next, add the `--amend` option to commit. A screen for adding a message will be displayed. Modify the message.
+
+```bash
+git commit --amend
+```
+
+Finally, add the `--continue` option to run rebase.
+
+```bash
+git rebase --continue
+```
+
+### Squash commits
+
+```bash
+git rebase -i <commit>
+```
+
+Add `squash` to commits you want to squash. Those commits marked with `squash` will merge into the first one marked with `pick`
+
+### Exit rebase
+
+```bash
+git rebase --abort
+```
+
+By adding the `--abort` option, you can exit the rebase operation.
+
+## Merging Strategies
+
+The most important thing to understand first: **Git branches are pointers to commits, and commits form a history**. Merging and rebasing are two different ways of combining work from different branches.
+
+We'll use this notation throughout:
+
+- `A`, `B`, `C` = commits.
+- `main`, `feature` = branch names pointing to commits.
+- `*` = a merge commit.
+- `HEAD` = where you currently are in Git.
+- Lines show the history connecting commits.
+
+### Fast-forward merge vs. non-fast-forward merge
+
+Imagine you start with this history:
+
+```
+A---B---C  main
+```
+
+You create a feature branch at C and make two commits on it:
+
+```
+A---B---C  main
+         \
+          D---E  feature
+```
+
+Here, `main` still points to `C`, while `feature` points to `E`.
+
+You've finished your feature and want to merge it into `main`. There are two possible outcomes.
+
+**A. Fast-forward merge `--ff`**
+
+A fast-forward merge is possible when the branch you're merging into has **not moved forward independently** since you branched off.
+
+Before merging:
+
+```
+A---B---C  main
+         \
+          D---E  feature
+```
+
+Run:
+
+```bash
+git switch main
+git merge feature
+```
+
+After merging:
+
+```
+A---B---C---D---E  main, feature
+```
+
+> [!IMPORTANT]
+> Git simply moves the main pointer forward from `C` to `E`. No new commit is created.
+
+**B. Non-fast-forward merge `--no-ff`**
+
+Now suppose you want to preserve a visible record that the feature branch was merged, even when a fast-forward would have been possible.
+
+Starting from the same history:
+
+```
+A---B---C  main
+         \
+          D---E  feature
+```
+
+Run:
+
+```bash
+git switch main
+git merge --no-ff feature
+```
+
+The result looks like this:
+
+```
+A---B---C-------M  main
+         \     /
+          D---E  feature
+```
+
+`M` is a merge commit. It has two parents: `C` and `E`.
+
+> [!IMPORTANT]
+> Git created a new commit to record the merge, even though it could have moved main forward without one.
+
+Why do this? It can make it easier to see where a feature began and where it was integrated into main.
+
+**What if both branches have moved?**
+
+This is the situation where a merge commit is often necessary.
+
+Suppose someone adds `X` to `main` while you're working on `feature`:
+
+```
+          D---E  feature
+         /
+A---B---C---X  main
+```
+
+The two branches have diverged. Neither branch is simply ahead of the other.
+
+Run:
+
+```bash
+git switch main
+git merge feature
+```
+
+Git combines the histories by creating a merge commit:
+
+```
+          D---E
+         /     \
+A---B---C---X---M  main
+```
+
+Here, `M` has parents `X` and `E`. The merge commit records both lines of development.
+
+**Key distinction**: `--no-ff` forces a merge commit when a fast-forward would otherwise be possible. If branches have diverged, Git normally needs a merge commit anyway, regardless of `--no-ff`.
+
+### Rebase
+
+Rebase takes your feature branch's commits and **replays them on top of another commit**, creating new commits with new IDs.
+
+**The branches diverge**
+
+You created `feature` from `C`, but `main` has moved forward with commit `X`.
+
+```
+          D---E  feature
+         /
+A---B---C---X  main
+```
+
+**Rebase feature onto main**
+
+Run:
+
+```bash
+git switch feature
+git rebase main
+```
+
+> [!NOTE]
+> In plain English:
+>
+> Take my `feature` commits and replay them on top of the latest commit on `main`.
+>
+> Git takes the changes introduced by `D` and `E` and reapplies them on top of `X`.
+
+Before:
+
+```
+          D---E  feature
+         /
+A---B---C---X  main
+```
+
+After:
+
+```
+A---B---C---X  main
+             \
+              D'---E'  feature
+```
+
+**Notice `D'` and `E'` instead of `D` and `E`.**
+
+These are **new commits**. They contain the replayed changes from the original commits, but their parent commits have changed, so their commit IDs change too.
+
+The original commits `D` and `E` aren't immediately deleted; they simply aren't part of the feature branch's new history.
+
+> [!IMPORTANT]
+> Why is this useful?
+>
+> Your feature now appears to have been developed after `X`. The history is linear, without a merge commit.
+
+**Merge the rebased feature into main**
+
+Run:
+
+```bash
+git switch main
+git merge feature
+```
+
+The result is:
+
+```
+A---B---C---X---D'---E'  main, feature
+```
