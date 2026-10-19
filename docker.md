@@ -1,22 +1,21 @@
 - [TODO](#todo)
-- [Commands Cheat Sheet](#commands-cheat-sheet)
-  - [Images](#images)
-    - [List Local Images](#list-local-images)
-    - [Delete an Image](#delete-an-image)
-    - [Remove all unused images](#remove-all-unused-images)
-    - [Build an Image from a Dockerfile](#build-an-image-from-a-dockerfile)
-  - [Containers](#containers)
-    - [List Currently Running Containers](#list-currently-running-containers)
-    - [List All Docker Container](#list-all-docker-container)
-    - [Remove a stopped container](#remove-a-stopped-container)
-    - [Start or stop an existing container](#start-or-stop-an-existing-container)
-    - [Create and run a container from an image, with a custom name](#create-and-run-a-container-from-an-image-with-a-custom-name)
-    - [Run a container with and publish a container’s port(s) to the host](#run-a-container-with-and-publish-a-containers-ports-to-the-host)
-    - [Run a container in the background](#run-a-container-in-the-background)
-    - [Run an image in interactively](#run-an-image-in-interactively)
-    - [Start an stopped container interactively](#start-an-stopped-container-interactively)
-    - [Open a shell inside a running container](#open-a-shell-inside-a-running-container)
-    - [Automatically delete a container when it stops](#automatically-delete-a-container-when-it-stops)
+- [Images](#images)
+  - [List Local Images](#list-local-images)
+  - [Delete an Image](#delete-an-image)
+  - [Remove all unused images](#remove-all-unused-images)
+  - [Build an Image from a Dockerfile](#build-an-image-from-a-dockerfile)
+- [Containers](#containers)
+  - [List Currently Running Containers](#list-currently-running-containers)
+  - [List All Docker Container](#list-all-docker-container)
+  - [Remove a stopped container](#remove-a-stopped-container)
+  - [Start or stop an existing container](#start-or-stop-an-existing-container)
+  - [Create and run a container from an image, with a custom name](#create-and-run-a-container-from-an-image-with-a-custom-name)
+  - [Run a container with and publish a container’s port(s) to the host](#run-a-container-with-and-publish-a-containers-ports-to-the-host)
+  - [Run a container in the background](#run-a-container-in-the-background)
+  - [Run an image in interactively](#run-an-image-in-interactively)
+  - [Start an stopped container interactively](#start-an-stopped-container-interactively)
+  - [Open a shell inside a running container](#open-a-shell-inside-a-running-container)
+  - [Automatically delete a container when it stops](#automatically-delete-a-container-when-it-stops)
 - [Flags](#flags)
   - [Environment Variables](#environment-variables)
 - [Dockerfile](#dockerfile)
@@ -30,11 +29,9 @@
 
 - [ ] Continue from volumes
 
-## Commands Cheat Sheet
+## Images
 
-### Images
-
-#### List Local Images
+### List Local Images
 
 ```bash
 docker images
@@ -42,7 +39,7 @@ docker images
 docker image list
 ```
 
-#### Delete an Image
+### Delete an Image
 
 ```bash
 docker rmi <image_name>
@@ -52,27 +49,27 @@ docker image rm <image_name>
 docker image rm <image_name> -f  # Force delete
 ```
 
-#### Remove all unused images
+### Remove all unused images
 
 ```bash
 docker image prune
 ```
 
-#### Build an Image from a Dockerfile
+### Build an Image from a Dockerfile
 
 ```bash
 docker build -t <image_name> <rel_path_to_dockerfile>
 ```
 
-### Containers
+## Containers
 
-#### List Currently Running Containers
+### List Currently Running Containers
 
 ```bash
 docker ps
 ```
 
-#### List All Docker Container
+### List All Docker Container
 
 ```bash
 docker ps --all
@@ -80,7 +77,7 @@ docker ps --all
 docker ps -a
 ```
 
-#### Remove a stopped container
+### Remove a stopped container
 
 ```bash
 docker rm <container_name>
@@ -88,31 +85,31 @@ docker rm <container_name>
 docker container rm <container_name>
 ```
 
-#### Start or stop an existing container
+### Start or stop an existing container
 
 ```bash
 docker start|stop <container_name> (or <container-id>)
 ```
 
-#### Create and run a container from an image, with a custom name
+### Create and run a container from an image, with a custom name
 
 ```bash
 docker run --name <container_name> <image_name>
 ```
 
-#### Run a container with and publish a container’s port(s) to the host
+### Run a container with and publish a container’s port(s) to the host
 
 ```bash
 docker run -p <host_port>:<container_port> <image_name>
 ```
 
-#### Run a container in the background
+### Run a container in the background
 
 ```bash
 docker run -d <image_name>
 ```
 
-#### Run an image in interactively
+### Run an image in interactively
 
 ```bash
 docker run -it <image_name>
@@ -121,7 +118,7 @@ docker run -it <image_name>
 - `-i` — keeps standard input open so you can type commands.
 - `-t` — allocates a terminal (TTY).
 
-#### Start an stopped container interactively
+### Start an stopped container interactively
 
 ```bash
 docker start -ai <container_name>
@@ -130,13 +127,13 @@ docker start -ai <container_name>
 - `-i` — keeps standard input open.
 - `-a` — attaches your terminal to the container's output.
 
-#### Open a shell inside a running container
+### Open a shell inside a running container
 
 ```bash
 docker exec -it <container_name> sh
 ```
 
-#### Automatically delete a container when it stops
+### Automatically delete a container when it stops
 
 ```bash
 docker run --rm -it <image_name>
