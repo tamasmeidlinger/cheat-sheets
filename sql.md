@@ -57,6 +57,8 @@
 ## Todo
 
 - [ ] Subqueries
+- [ ] foreign keys references syntax
+- [ ] psql - set password and setup
 - [ ] This stuff:
 
 ```postgres
@@ -640,6 +642,10 @@ CREATE TABLE IF NOT EXISTS formats (
 
 ```bash
 psql --username=username --dbname=postgres
+
+psql -U username -d database_name
+
+psql -h localhost -p 5432
 ```
 
 ### List All Databases
