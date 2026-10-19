@@ -34,6 +34,15 @@
   - [INSERT](#insert)
   - [UPDATE](#update)
   - [DELETE](#delete)
+- [Data Types](#data-types)
+- [Constraints](#constraints)
+  - [CHECK](#check)
+  - [NOT NULL](#not-null)
+  - [UNIQUE](#unique)
+  - [PRIMARY KEY](#primary-key)
+  - [FOREIGN KEYS](#foreign-keys)
+- [Identity Columns](#identity-columns)
+  - [GENERATED AS IDENTITY](#generated-as-identity)
 - [psql](#psql)
   - [Login Command](#login-command)
   - [List All Databases](#list-all-databases)
@@ -47,9 +56,44 @@
 
 ## Todo
 
-- [ ] Constraints
-- [ ] Data Types
 - [ ] Subqueries
+- [ ] This stuff:
+
+```postgres
+WITH new_book AS (
+    INSERT INTO books (
+      title,
+      format_id,
+      price,
+      page_count,
+      publication_date,
+      publisher_id,
+      isbn_13,
+      series_id,
+      width,
+      height,
+      depth
+    )
+    VALUES (
+      'The Scorch Trials (Maze Runner Series #2)',
+      2,
+      20.99,
+      400,
+      '2011-09-13',
+      2,
+      '9780385738750',
+      2,
+      5.5,
+      8.3,
+      0.8
+    )
+    RETURNING id
+)
+INSERT INTO book_authors (book_id, author_id)
+SELECT id, 2
+FROM new_book;
+
+```
 
 ## Key Concepts
 
@@ -87,7 +131,7 @@ FROM mytable
     LIMIT count OFFSET COUNT;
 ```
 
-```mermaid
+<!-- ```mermaid -->
 flowchart TD
     A["1. FROM and JOINs"] -->|"Working set of rows assembled"| B["2. WHERE"]
     B -->|"Rows filtered by conditions"| C["3. GROUP BY"]
@@ -103,7 +147,7 @@ flowchart TD
 
     class A,B,C,D,E,F,G,H step
     class I result
-```
+<!-- ``` -->
 
 Each query begins with **finding** the data that we need in a database, and then **filtering** that data down into something that can be processed and understood as quickly as possible.
 
@@ -146,9 +190,10 @@ Finally, the rows that fall outside the range specified by the `LIMIT` and `OFFS
 #### Create Table
 
 ```postgres
-CREATE TABLE IF NOT EXISTS table_name (
-  column_name BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  column_name VARCHAR(100) NOT NULL UNIQUE
+CREATE TABLE IF NOT EXISTS mytable (
+    column DataType TableConstraint DEFAULT default_value,
+    another_column DataType TableConstraint DEFAULT default_value,
+    …
 );
 ```
 
@@ -412,6 +457,181 @@ WHERE condition;
 
 ```postgres
 DELETE FROM table_name WHERE condition;
+```
+
+## Data Types
+
+- [ ] Generate identity
+
+[PostgreSQL Docs](https://www.postgresql.org/docs/9.4/datatype.html)
+
+| Data Type | Description | Example |
+|---|---|---|
+| `NUMERIC(p, s)` | Stores precise decimal numbers with specified precision and scale. | `price NUMERIC(10, 2)` |
+| `TEXT` | Stores variable-length character strings with no specific length limit. | `column_name TEXT` |
+| `INTEGER` | Stores whole numbers without decimal places. | `units_sold INTEGER` |
+| `SMALLINT` | Stores whole numbers using less storage than `INTEGER`, with a smaller range. | `quantity SMALLINT` |
+| `BIGINT` | Stores whole numbers with a larger range than `INTEGER`. | `population BIGINT` |
+| `SERIAL` | Creates an auto-incrementing integer column in PostgreSQL. | `id SERIAL` |
+| `AUTO_INCREMENT` | MySQL attribute used to create auto-incrementing integer columns. | `id INT AUTO_INCREMENT` |
+| `VARCHAR(n)` | Stores variable-length character strings with a specified maximum length. | `name VARCHAR(50)` |
+| `DATE` | Stores date values (year, month, day). | `event_date DATE` |
+| `TIME` | Stores time values (hour, minute, second). | `start_time TIME` |
+| `TIMESTAMP` | Stores date and time values without time zone information. | `event_timestamp TIMESTAMP` |
+| `TIMESTAMPTZ` | PostgreSQL shorthand for `TIMESTAMP WITH TIME ZONE`; stores a timestamp with time zone-aware semantics. | `event_timestamp TIMESTAMP WITH TIME ZONE` |
+| `BOOLEAN` | Stores logical values: `TRUE`, `FALSE`, or `NULL`. | `is_active BOOLEAN` |
+
+## Constraints
+
+[PostgreSQL Docs](https://www.postgresql.org/docs/18/ddl-constraints.html)
+
+### CHECK
+
+It allows you to specify that the value in a certain column must satisfy a Boolean (truth-value) expression.
+
+```postgres
+CREATE TABLE products (
+    product_no integer,
+    name text,
+    price numeric CHECK (price > 0)
+);
+```
+
+```postgres
+CREATE TABLE products (
+    product_no integer,
+    name text,
+    price numeric,
+    CHECK (price > 0),
+    discounted_price numeric,
+    CHECK (discounted_price > 0),
+    CHECK (price > discounted_price)
+);
+```
+
+```
+CREATE TABLE products (
+    product_no integer,
+    name text,
+    price numeric CHECK (price > 0),
+    discounted_price numeric,
+    CHECK (discounted_price > 0 AND price > discounted_price)
+);
+```
+
+You can also give the constraint a separate name. This clarifies error messages and allows you to refer to the constraint when you need to change it.
+
+```postgres
+CREATE TABLE products (
+    product_no integer,
+    name text,
+    price numeric CONSTRAINT positive_price CHECK (price > 0)
+);
+```
+
+### NOT NULL
+
+```postgres
+CREATE TABLE products (
+    product_no integer NOT NULL,
+    name text NOT NULL,
+    price numeric
+);
+```
+
+### UNIQUE
+
+```postgres
+CREATE TABLE products (
+    product_no integer UNIQUE,
+    name text,
+    price numeric
+);
+```
+
+### PRIMARY KEY
+
+```postgres
+CREATE TABLE products (
+    product_no integer PRIMARY KEY,
+    name text,
+    price numeric
+);
+```
+
+**Composite Primary Key**: This constraint defines a primary key that consists of multiple columns.
+
+```postgres
+CREATE TABLE course_enrollments (
+    student_id INT,
+    course_id INT,
+    PRIMARY KEY (student_id, course_id)
+);
+```
+
+```postgres
+CREATE TABLE IF NOT EXISTS book_authors (
+  book_id BIGINT NOT NULL,
+  author_id BIGINT NOT NULL,
+
+  PRIMARY KEY (book_id, author_id),
+
+  FOREIGN KEY (book_id)
+  REFERENCES books(id)
+  ON DELETE CASCADE,
+
+  FOREIGN KEY (author_id)
+  REFERENCES authors(id)
+  ON DELETE CASCADE
+);
+```
+
+### FOREIGN KEYS
+
+```postgres
+CREATE TABLE products (
+    product_no integer PRIMARY KEY,
+    name text,
+    price numeric
+);
+
+CREATE TABLE orders (
+    order_id integer PRIMARY KEY,
+    product_no integer REFERENCES products (product_no),
+    quantity integer
+);
+```
+
+```postgres
+CREATE TABLE IF NOT EXISTS formats (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  name VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS books (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  format_id BIGINT NOT NULL,
+
+  CONSTRAINT fk_books_format
+    FOREIGN KEY (format_id)
+    REFERENCES formats(id),
+);
+```
+
+## Identity Columns
+
+### GENERATED AS IDENTITY
+
+`GENERATED ALWAYS AS IDENTITY`:	PostgreSQL generates the ID. Manually supplying an ID is rejected by default.
+
+`GENERATED BY DEFAULT AS IDENTITY`:	PostgreSQL generates the ID when you don't supply one, but allows you to provide an ID manually.
+
+```postgres
+CREATE TABLE IF NOT EXISTS formats (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  name VARCHAR(50) NOT NULL UNIQUE
+);
 ```
 
 ## psql
