@@ -53,7 +53,6 @@
   - [Display schema/structure of a table](#display-schemastructure-of-a-table)
   - [Quit](#quit)
 
-
 ## Todo
 
 - [ ] Subqueries
@@ -294,29 +293,29 @@ WHERE condition
     AND/OR another_condition
     AND/OR …;
 ```
+
 #### Operators
 
-|       Operator      | Condition                                            | SQL Example                   |
-|:-------------------:|------------------------------------------------------|-------------------------------|
-| =, !=, <, <=, >, >= | Standard numerical operators                         | `col_name != 4`               |
-| BETWEEN … AND …     | Number is within range of two values (inclusive)     | `col_name BETWEEN 1.5 AND 10.5` |
+|      Operator       | Condition                                            | SQL Example                     |
+| :-----------------: | ---------------------------------------------------- | ------------------------------- |
+| =, !=, <, <=, >, >= | Standard numerical operators                         | `col_name != 4`                 |
+|   BETWEEN … AND …   | Number is within range of two values (inclusive)     | `col_name BETWEEN 1.5 AND 10.5` |
 | NOT BETWEEN … AND … | Number is not within range of two values (inclusive) | `col_name NOT BETWEEN 1 AND 10` |
-| IN (…)              | Number exists in a list                              | `col_name IN (2, 4, 6)`       |
-| NOT IN (…)          | Number does not exist in a list                      | `col_name NOT IN (1, 3, 5)`   |
+|       IN (…)        | Number exists in a list                              | `col_name IN (2, 4, 6)`         |
+|     NOT IN (…)      | Number does not exist in a list                      | `col_name NOT IN (1, 3, 5)`     |
 
-| Operator      | Condition                                                                                 | Example |
-|:-------------:|--------------------------------------------------------------------------------------------|---------|
-| `=`           | Case-sensitive exact string comparison (depending on database/collation)                  | `col_name = 'abc'` |
-| `!=` or `<>`  | String inequality comparison                                                              | `col_name != 'abcd'` |
-| `LIKE`        | Pattern matching; case sensitivity depends on database/collation                            | `col_name LIKE 'ABC'` |
-| `NOT LIKE`    | Negated pattern matching; case sensitivity depends on database/collation                   | `col_name NOT LIKE 'ABCD'` |
-| `ILIKE`       | Case-insensitive pattern matching (PostgreSQL-specific)                                   | `col_name ILIKE 'abc'` |
-| `NOT ILIKE`   | Case-insensitive negated pattern matching (PostgreSQL-specific)                            | `col_name NOT ILIKE 'abc'` |
-| `%`           | Matches a sequence of zero or more characters (used with `LIKE`, `ILIKE`, etc.)            | `col_name LIKE '%AT%'` (matches `'AT'`, `'ATTIC'`, `'CAT'`, or `'BATS'`) |
-| `_`           | Matches exactly one character (used with `LIKE`, `ILIKE`, etc.)                            | `col_name LIKE 'AN_'` (matches `'AND'`, but not `'AN'`) |
-| `IN (…)`      | Checks whether a string matches any value in a list                                       | `col_name IN ('A', 'B', 'C')` |
-| `NOT IN (…)`  | Checks whether a string matches none of the values in a list                              | `col_name NOT IN ('D', 'E', 'F')` |
-
+|   Operator   | Condition                                                                       | Example                                                                  |
+| :----------: | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+|     `=`      | Case-sensitive exact string comparison (depending on database/collation)        | `col_name = 'abc'`                                                       |
+| `!=` or `<>` | String inequality comparison                                                    | `col_name != 'abcd'`                                                     |
+|    `LIKE`    | Pattern matching; case sensitivity depends on database/collation                | `col_name LIKE 'ABC'`                                                    |
+|  `NOT LIKE`  | Negated pattern matching; case sensitivity depends on database/collation        | `col_name NOT LIKE 'ABCD'`                                               |
+|   `ILIKE`    | Case-insensitive pattern matching (PostgreSQL-specific)                         | `col_name ILIKE 'abc'`                                                   |
+| `NOT ILIKE`  | Case-insensitive negated pattern matching (PostgreSQL-specific)                 | `col_name NOT ILIKE 'abc'`                                               |
+|     `%`      | Matches a sequence of zero or more characters (used with `LIKE`, `ILIKE`, etc.) | `col_name LIKE '%AT%'` (matches `'AT'`, `'ATTIC'`, `'CAT'`, or `'BATS'`) |
+|     `_`      | Matches exactly one character (used with `LIKE`, `ILIKE`, etc.)                 | `col_name LIKE 'AN_'` (matches `'AND'`, but not `'AN'`)                  |
+|   `IN (…)`   | Checks whether a string matches any value in a list                             | `col_name IN ('A', 'B', 'C')`                                            |
+| `NOT IN (…)` | Checks whether a string matches none of the values in a list                    | `col_name NOT IN ('D', 'E', 'F')`                                        |
 
 ### Filtering and sorting Query results
 
@@ -359,13 +358,13 @@ WHERE constraint_expression;
 
 #### Common aggregate functions
 
-| Function                        | Description |
-|---------------------------------|-------------|
-| `COUNT(*)`, `COUNT(column)`     | Counts the number of rows in the group if `*` is specified. Otherwise, counts the number of rows with non-`NULL` values in the specified column. |
-| `MIN(column)`                   | Finds the smallest numerical value in the specified column for all rows in the group. |
-| `MAX(column)`                   | Finds the largest numerical value in the specified column for all rows in the group. |
-| `AVG(column)`                   | Finds the average numerical value in the specified column for all rows in the group. |
-| `SUM(column)`                   | Finds the sum of all numerical values in the specified column for all rows in the group. |
+| Function                    | Description                                                                                                                                      |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `COUNT(*)`, `COUNT(column)` | Counts the number of rows in the group if `*` is specified. Otherwise, counts the number of rows with non-`NULL` values in the specified column. |
+| `MIN(column)`               | Finds the smallest numerical value in the specified column for all rows in the group.                                                            |
+| `MAX(column)`               | Finds the largest numerical value in the specified column for all rows in the group.                                                             |
+| `AVG(column)`               | Finds the average numerical value in the specified column for all rows in the group.                                                             |
+| `SUM(column)`               | Finds the sum of all numerical values in the specified column for all rows in the group.                                                         |
 
 #### GROUP BY
 
@@ -414,7 +413,7 @@ When joining table A to table B:
 
 1. a **LEFT JOIN** simply includes rows from A regardless of whether a matching row is found in B.
 2. The **RIGHT JOIN** is the same, but reversed, keeping rows in B regardless of whether a match is found in A.
-3.  Finally, a **FULL JOIN** simply means that rows from both tables are kept, regardless of whether a matching row exists in the other table.
+3. Finally, a **FULL JOIN** simply means that rows from both tables are kept, regardless of whether a matching row exists in the other table.
 
 ```sql
 SELECT column, another_column, …
@@ -467,21 +466,21 @@ DELETE FROM table_name WHERE condition;
 
 [PostgreSQL Docs](https://www.postgresql.org/docs/9.4/datatype.html)
 
-| Data Type | Description | Example |
-|---|---|---|
-| `NUMERIC(p, s)` | Stores precise decimal numbers with specified precision and scale. | `price NUMERIC(10, 2)` |
-| `TEXT` | Stores variable-length character strings with no specific length limit. | `column_name TEXT` |
-| `INTEGER` | Stores whole numbers without decimal places. | `units_sold INTEGER` |
-| `SMALLINT` | Stores whole numbers using less storage than `INTEGER`, with a smaller range. | `quantity SMALLINT` |
-| `BIGINT` | Stores whole numbers with a larger range than `INTEGER`. | `population BIGINT` |
-| `SERIAL` | Creates an auto-incrementing integer column in PostgreSQL. | `id SERIAL` |
-| `AUTO_INCREMENT` | MySQL attribute used to create auto-incrementing integer columns. | `id INT AUTO_INCREMENT` |
-| `VARCHAR(n)` | Stores variable-length character strings with a specified maximum length. | `name VARCHAR(50)` |
-| `DATE` | Stores date values (year, month, day). | `event_date DATE` |
-| `TIME` | Stores time values (hour, minute, second). | `start_time TIME` |
-| `TIMESTAMP` | Stores date and time values without time zone information. | `event_timestamp TIMESTAMP` |
-| `TIMESTAMPTZ` | PostgreSQL shorthand for `TIMESTAMP WITH TIME ZONE`; stores a timestamp with time zone-aware semantics. | `event_timestamp TIMESTAMP WITH TIME ZONE` |
-| `BOOLEAN` | Stores logical values: `TRUE`, `FALSE`, or `NULL`. | `is_active BOOLEAN` |
+| Data Type        | Description                                                                                             | Example                                    |
+| ---------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| `NUMERIC(p, s)`  | Stores precise decimal numbers with specified precision and scale.                                      | `price NUMERIC(10, 2)`                     |
+| `TEXT`           | Stores variable-length character strings with no specific length limit.                                 | `column_name TEXT`                         |
+| `INTEGER`        | Stores whole numbers without decimal places.                                                            | `units_sold INTEGER`                       |
+| `SMALLINT`       | Stores whole numbers using less storage than `INTEGER`, with a smaller range.                           | `quantity SMALLINT`                        |
+| `BIGINT`         | Stores whole numbers with a larger range than `INTEGER`.                                                | `population BIGINT`                        |
+| `SERIAL`         | Creates an auto-incrementing integer column in PostgreSQL.                                              | `id SERIAL`                                |
+| `AUTO_INCREMENT` | MySQL attribute used to create auto-incrementing integer columns.                                       | `id INT AUTO_INCREMENT`                    |
+| `VARCHAR(n)`     | Stores variable-length character strings with a specified maximum length.                               | `name VARCHAR(50)`                         |
+| `DATE`           | Stores date values (year, month, day).                                                                  | `event_date DATE`                          |
+| `TIME`           | Stores time values (hour, minute, second).                                                              | `start_time TIME`                          |
+| `TIMESTAMP`      | Stores date and time values without time zone information.                                              | `event_timestamp TIMESTAMP`                |
+| `TIMESTAMPTZ`    | PostgreSQL shorthand for `TIMESTAMP WITH TIME ZONE`; stores a timestamp with time zone-aware semantics. | `event_timestamp TIMESTAMP WITH TIME ZONE` |
+| `BOOLEAN`        | Stores logical values: `TRUE`, `FALSE`, or `NULL`.                                                      | `is_active BOOLEAN`                        |
 
 ## Constraints
 
@@ -625,9 +624,9 @@ CREATE TABLE IF NOT EXISTS books (
 
 ### GENERATED AS IDENTITY
 
-`GENERATED ALWAYS AS IDENTITY`:	PostgreSQL generates the ID. Manually supplying an ID is rejected by default.
+`GENERATED ALWAYS AS IDENTITY`: PostgreSQL generates the ID. Manually supplying an ID is rejected by default.
 
-`GENERATED BY DEFAULT AS IDENTITY`:	PostgreSQL generates the ID when you don't supply one, but allows you to provide an ID manually.
+`GENERATED BY DEFAULT AS IDENTITY`: PostgreSQL generates the ID when you don't supply one, but allows you to provide an ID manually.
 
 ```postgres
 CREATE TABLE IF NOT EXISTS formats (
