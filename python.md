@@ -27,6 +27,10 @@
   - [pop()](#pop)
   - [update()](#update)
   - [Looping Over a Dictionary](#looping-over-a-dictionary)
+  - [Unpacking a Dictionary](#unpacking-a-dictionary)
+    - [Unpack values from a dictionary](#unpack-values-from-a-dictionary)
+    - [Unpacking a dictionary with `**`](#unpacking-a-dictionary-with-)
+    - [Unpacking a custom object](#unpacking-a-custom-object)
 - [Sets](#sets)
   - [Methods](#methods)
     - [add()](#add)
@@ -64,6 +68,7 @@
 
 ## Todo
 
+- [ ] vars() builtins
 - [ ] OOP
 - [ ] Python import path - how to add things
 - [ ] Python Standard Library
@@ -320,6 +325,24 @@ developer = ['Alice', 34, 'Rust Developer']
 name, *rest = developer
 ```
 
+```python
+def add(a, b, c):
+    return a + b + c
+
+
+numbers = [1, 2, 3]
+
+add(*numbers)  # 6
+```
+
+```python
+a = [1, 2]
+b = [3, 4]
+
+combined = [*a, *b]
+# [1, 2, 3, 4]
+```
+
 ### Other
 
 #### sort()
@@ -493,6 +516,67 @@ for key, value in person.items():
 # name: Tamas
 # age: 25
 # hobby: drumming
+```
+
+### Unpacking a Dictionary
+
+#### Unpack values from a dictionary
+
+```python
+person = {"name": "Alice", "age": 25, "city": "Odense"}
+
+name, age, city = person.values()
+
+print(name)  # Alice
+print(age)  # 25
+print(city)  # Odense
+```
+
+#### Unpacking a dictionary with `**`
+
+```python
+def greet(name, age):
+    print(f"{name} is {age} years old")
+
+
+person = {"name": "Alice", "age": 25}
+
+greet(**person)
+# Alice is 25 years old
+
+# This is equivalent to:
+# greet(name="Alice", age=25)
+```
+
+```python
+a = {"x": 1, "y": 2}
+b = {"z": 3}
+
+merged = {**a, **b}
+# {'x': 1, 'y': 2, 'z': 3}
+```
+
+#### Unpacking a custom object
+
+```python
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+
+p = Person("Alice", 25)
+
+print(vars(p))
+# {'name': 'Alice', 'age': 25}
+
+
+def greet(name, age):
+    print(name, age)
+
+
+greet(**vars(p))
+# Alice 25
 ```
 
 ## Sets

@@ -1,5 +1,5 @@
 - [Todo](#todo)
-- [String](#string)
+- [Strings](#strings)
   - [trim()](#trim)
   - [replace() / replaceAll()](#replace--replaceall)
   - [split()](#split)
@@ -11,10 +11,38 @@
   - [repeat()](#repeat)
   - [toUpperCase() \& toLowerCase()](#touppercase--tolowercase)
 - [Arrays](#arrays)
-  - [push()](#push)
-  - [Extending arrays using `push()`](#extending-arrays-using-push)
-  - [concat()](#concat)
-  - [splice()](#splice)
+  - [Adding elements](#adding-elements)
+    - [push()](#push)
+    - [Extending arrays using `push()`](#extending-arrays-using-push)
+    - [unshift()](#unshift)
+  - [Remove elements](#remove-elements)
+    - [pop()](#pop)
+    - [shift()](#shift)
+  - [splice() - insert, replace, remove elements](#splice---insert-replace-remove-elements)
+  - [Other](#other)
+    - [indexOf()](#indexof-1)
+    - [includes()](#includes-1)
+    - [concat()](#concat)
+    - [slice()](#slice-1)
+  - [Spread Syntax](#spread-syntax)
+  - [Shallow Copy](#shallow-copy)
+  - [Array Destructuring](#array-destructuring)
+- [Objects](#objects)
+  - [Definition](#definition)
+  - [Set a Property of an Existing Object](#set-a-property-of-an-existing-object)
+  - [Removing Properties From an Object](#removing-properties-from-an-object)
+    - [`delete` operator](#delete-operator)
+  - [Checking if an Object has a Property](#checking-if-an-object-has-a-property)
+    - [Object.hasOwn()](#objecthasown)
+    - [hasOwnProperty()](#hasownproperty)
+    - [`in` Operator](#in-operator)
+  - [Accessing Properties From Nested Objects](#accessing-properties-from-nested-objects)
+  - [Working with the Optional Chaining Operator `?.`](#working-with-the-optional-chaining-operator-)
+  - [Object Methods](#object-methods)
+  - [Object Destructuring](#object-destructuring)
+  - [Working with JSON](#working-with-json)
+    - [JSON.stringify()](#jsonstringify)
+    - [JSON.parse()](#jsonparse)
 
 
 ## Todo
@@ -35,8 +63,19 @@ const count = greeting.split("hello").length - 1;
 
 console.log(count); // 2
 ```
+4. Type casting
+5. TypeScript Typing
+6. imports/exports
 
-## String
+- [ ] Terminology and Other [Source](https://www.freecodecamp.org/learn/javascript-v9/review-javascript-fundamentals/review-javascript-fundamentals)
+7. Closures
+8. Hoisting and var Keyword
+
+- [ ] Higher Order Functions and Callback functions [Source](https://www.freecodecamp.org/learn/javascript-v9/review-javascript-higher-order-functions/review-javascript-higher-order-functions)
+
+- [ ] Web APIs
+
+## Strings
 
 ### trim()
 
@@ -179,7 +218,9 @@ console.log(greeting.toLowerCase()); // "hello world !"
 
 ## Arrays
 
-### push()
+### Adding elements
+
+#### push()
 
 **push()** - adds one or more items to the end of an array
 
@@ -195,7 +236,7 @@ numbers.push(5, 6);
 console.log(numbers); // [ 1, 2, 3, 4, 5, 6 ]
 ```
 
-### Extending arrays using `push()`
+#### Extending arrays using `push()`
 
 ```typescript
 const numbers: number[] = [1, 2, 3, 4, 5];
@@ -206,25 +247,61 @@ numbers.push(...evenNumbers);
 console.log(numbers); // [1, 2, 3, 4, 5, 6, 8, 10]
 ```
 
-### concat()
+#### unshift()
 
-**concat()** - returns a new array without modifying the original array
+**unshift()** - add elements to the beginning of the array and return the new length
 
 ```typescript
-const numbers: number[] = [1, 2, 3];
-const moreNumbers: number[] = [4, 5, 6];
+const desserts: string[] = ["cake", "cookies", "pie"];
 
-const combined: number[] = numbers.concat(moreNumbers);
+console.log(desserts.length); // 3
 
-console.log(combined); // [1, 2, 3, 4, 5, 6]
-console.log(numbers); // [1, 2, 3]
+const newLength = desserts.unshift("ice cream");
+
+console.log(desserts); // ["ice cream", "cake", "cookies", "pie"];
+console.log(desserts.length); // 4
 ```
 
-### splice()
+### Remove elements
+
+#### pop()
+
+**pop()** - remove and return the last element from an array
+
+If the array is **empty**, then the return value will be `undefined`.
+
+```typescript
+const desserts = ["cake", "cookies", "pie"];
+desserts.pop();
+
+console.log(desserts); // ["cake", "cookies"];
+```
+
+#### shift()
+
+**shift()** - remove and return the first element from an array
+
+If the array is **empty**, then the return value will be `undefined`.
+
+```typescript
+const desserts = ["cake", "cookies", "pie"];
+desserts.shift();
+
+console.log(desserts); // ["cookies", "pie"];
+```
+
+
+### splice() - insert, replace, remove elements
 
 **splice()** - can insert, replace, or remove elements at a specified index
 
 `array.splice(start, deleteCount, item1, item2, ...);`
+
+> [!important]
+> The **return value** for the `splice()` method will be an **array of the items removed from the array**.
+> If **nothing is removed**, then an **empty array** will be returned.
+>
+> This method will **mutate the original array**, modifying it **in place** rather than creating a new array.
 
 ```typescript
 const numbers: number[] = [1, 2, 5, 6];
@@ -242,4 +319,356 @@ const rightNumbers: number[] = [3, 4];
 
 numbers.splice(2, 2, ...rightNumbers); // [ 1, 2, 3, 4, 5, 6 ]
 console.log(numbers);
+```
+
+### Other
+
+#### indexOf()
+
+**indexOf()** - finding the first index of a specific element within an array
+
+If the element cannot be found, then it will return `-1`.
+
+```typescript
+const fruits = ["apple", "banana", "orange", "banana"];
+const index = fruits.indexOf("banana");
+
+console.log(index); // 1
+console.log(fruits.indexOf("not found")); // -1
+```
+
+#### includes()
+
+**includes()** - check if an array contains a specific value
+
+```typescript
+const programmingLanguages = ["JavaScript", "Python", "C++"];
+
+console.log(programmingLanguages.includes("Python")); // true
+console.log(programmingLanguages.includes("Perl")); // false
+```
+
+#### concat()
+
+**concat()** - returns a new array without modifying the original array
+
+Can merge two or **more** arrays.
+
+```typescript
+const numbers: number[] = [1, 2, 3];
+const moreNumbers: number[] = [4, 5, 6];
+
+const combined: number[] = numbers.concat(moreNumbers);
+
+console.log(combined); // [1, 2, 3, 4, 5, 6]
+console.log(numbers); // [1, 2, 3]
+```
+
+```typescript
+const fruits = ["apple", "banana"];
+const fruits2 = ["orange", "lemon"];
+const fruits3 = ["strawberry", "raspberry"];
+
+const newFruits = fruits.concat(fruits2, fruits3);
+
+console.log(newFruits);
+// [ 'apple', 'banana', 'orange', 'lemon', 'strawberry', 'raspberry' ]
+```
+
+**reverse()** - reverses an array in place
+
+```typescript
+const desserts = ["cake", "cookies", "pie"];
+console.log(desserts.reverse()); // ["pie", "cookies", "cake"]
+```
+
+#### slice()
+
+**slice()** - returns a new array containing a shallow copy of a portion of the original array, specified by start and end indices
+
+> [!important]
+> The new array contains **references to the same elements** as the original array (not duplicates).
+>
+> This means that if the elements are **primitives** (like numbers or strings), the values are **copied**
+>
+> If the elements are **objects** or **arrays**, the **references** are **copied**, not the objects themselves.
+
+```typescript
+const programmingLanguages = ["JavaScript", "Python", "C++"];
+const newList = programmingLanguages.slice(1);
+
+console.log(newList); // ["Python", "C++"]
+```
+
+### Spread Syntax
+
+The spread syntax is used to create **shallow copies** of an array.
+
+```typescript
+const originalArray = [1, 2, 3];
+const shallowCopiedArray = [...originalArray];
+
+shallowCopiedArray.push(4);
+
+console.log(originalArray); // [1, 2, 3]
+console.log(shallowCopiedArray); // [1, 2, 3, 4]
+```
+
+### Shallow Copy
+
+If the elements are **primitives** (like numbers or strings), the values are **copied**.
+
+If the elements are **objects** or **arrays**, the **references** are **copied**, not the objects themselves.
+
+```typescript
+type MyArray = [string, { name: string }];
+
+const original: MyArray = ["primitive", { name: "Tamas" }];
+const copy: MyArray = [...original];
+
+console.log(copy);
+// [ 'primitive', { name: 'Tamas' } ]
+
+copy[0] = "changed";
+copy[1].name = "Anna";
+
+console.log(original); // [ 'primitive', { name: 'Anna' } ]
+console.log(copy); // [ 'changed', { name: 'Anna' } ]
+```
+
+### Array Destructuring
+
+```typescript
+const fruits: string[] = ["apple", "banana", "orange"];
+
+const [first, second, third] = fruits;
+
+console.log(first); // "apple"
+console.log(second); // "banana"
+console.log(third); // "orange"
+```
+
+**Rest Syntax**: This allows you to capture the remaining elements of an array that haven't been destructured into a new array.
+
+```typescript
+const fruits: string[] = ["apple", "banana", "orange", "mango", "kiwi"];
+const [first, second, ...rest] = fruits;
+
+console.log(first); // "apple"
+console.log(second); // "banana"
+console.log(rest); // ["orange", "mango", "kiwi"]
+```
+
+## Objects
+
+### Definition
+
+An object is a **data structure** that is made up of **properties**. A property consists of a **key** and a **value**. To access data from an object you can use either **dot notation** or **bracket notation**.
+
+```typescript
+const person = {
+  name: "Alice",
+  age: 30,
+  city: "New York"
+};
+
+console.log(person.name);  // Alice
+console.log(person["name"]); // Alice
+```
+
+### Set a Property of an Existing Object
+
+```typescript
+const person = {
+  name: "Alice",
+  age: 30
+};
+
+person.job = "Engineer"
+person["hobby"] = "Knitting"
+console.log(person);  // {name: 'Alice', age: 30, job: 'Engineer', hobby: 'Knitting'}
+```
+
+### Removing Properties From an Object
+
+#### `delete` operator
+
+`delete` - operator is used to remove a property from an object.
+
+```typescript
+const person = {
+  name: "Alice",
+  age: 30,
+  job: "Engineer"
+};
+
+delete person.job;
+
+console.log(person.job); // undefined
+```
+
+### Checking if an Object has a Property
+
+#### Object.hasOwn()
+
+**Object.hasOwn()** - modern, recommended way to check if an object has a property as its own (not inherited)
+
+The syntax is `Object.hasOwn(object, propertyName)`.
+
+It returns `true` if the property exists on the object and false if it does not, regardless of the property's value.
+
+This makes it safer than `hasOwnProperty()` and more reliable than `if (obj.prop)` when values can be `0`, `false`, `null`, or `undefined`.
+
+```typescript
+const person = {
+  name: "Alice",
+  age: 30
+};
+
+console.log(Object.hasOwn(person, "name")); // true
+console.log(Object.hasOwn(person, "job")); // false
+```
+
+A more detailed example showing why Object.hasOwn() is more reliable than checking the value directly:
+
+```typescript
+const settings = {
+  darkMode: false,
+  fontSize: 0,
+  language: null
+};
+
+// Object.hasOwn() correctly sees these properties exist
+console.log(Object.hasOwn(settings, "darkMode")); // true (value is false, but exists)
+console.log(Object.hasOwn(settings, "fontSize")); // true (value is 0, but exists)
+console.log(Object.hasOwn(settings, "theme"));    // false (property was never added)
+
+// Using if() directly is unsafe for falsy values!
+if (settings.darkMode) {
+  console.log("Dark mode on"); // Does NOT print — misleading!
+}
+
+// Object.hasOwn() is the safe way
+if (Object.hasOwn(settings, "darkMode")) {
+  console.log("darkMode exists, value is:", settings.darkMode); // darkMode exists, value is: false
+}
+```
+
+#### hasOwnProperty()
+
+**hasOwnProperty()** - returns a `boolean` indicating whether the object has the specified property as its own property
+
+```typescript
+const person = {
+  name: "Alice",
+  age: 30
+};
+
+console.log(person.hasOwnProperty("name")); // true
+console.log(person.hasOwnProperty("job")); // false
+```
+
+#### `in` Operator
+
+*`in`* - operator will return `true` if the property exists in the object
+
+```typescript
+const person = {
+  name: "Bob",
+  age: 25
+};
+
+console.log("name" in person);  // true
+```
+
+### Accessing Properties From Nested Objects
+
+```typescript
+const person = {
+  name: "Alice",
+  age: 30,
+  contact: {
+    email: "alice@example.com",
+    phone: {
+      home: "123-456-7890",
+      work: "098-765-4321"
+    }
+  }
+};
+
+console.log(person.contact.phone.work); // "098-765-4321"
+```
+
+### Working with the Optional Chaining Operator `?.`
+
+This operator lets you **safely** access object properties or call methods without worrying whether they exist.
+
+```typescript
+const user = {
+  name: "John",
+  profile: {
+    email: "john@example.com",
+    address: {
+      street: "123 Main St",
+      city: "Somewhere"
+    }
+  }
+};
+
+console.log(user.profile?.address?.street); // "123 Main St"
+console.log(user.profile?.phone?.number);   // undefined
+```
+
+### Object Methods
+
+```typescript
+const person = {
+  name: "Bob",
+  age: 30,
+  sayHello: function() {
+    return "Hello, my name is " + this.name;
+  }
+};
+
+console.log(person.sayHello()); // "Hello, my name is Bob"
+```
+
+### Object Destructuring
+
+```typescript
+const person = { name: "Alice", age: 30, city: "New York" };
+
+const { name, age } = person;
+
+console.log(name); // Alice
+console.log(age);  // 30
+```
+
+### Working with JSON
+
+#### JSON.stringify()
+
+**JSON.stringify()** - used to convert a JavaScript object into a JSON string
+
+```typescript
+const user = {
+  name: "John",
+  age: 30,
+  isAdmin: true
+};
+
+const jsonString = JSON.stringify(user);
+console.log(jsonString); // '{"name":"John","age":30,"isAdmin":true}'
+```
+
+#### JSON.parse()
+
+**JSON.parse()** - converts a JSON string back into a JavaScript object
+
+```typescript
+const jsonString = '{"name":"John","age":30,"isAdmin":true}';
+const userObject = JSON.parse(jsonString);
+
+// result: { name: 'John', age: 30, isAdmin: true }
+console.log(userObject);
 ```
