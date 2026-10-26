@@ -32,6 +32,7 @@
   - [Rename local and remote branch](#rename-local-and-remote-branch)
   - [Fetching remote branches](#fetching-remote-branches)
   - [Pulling remote branches](#pulling-remote-branches)
+  - [Rebase Fails Due to Differences in Commit History](#rebase-fails-due-to-differences-in-commit-history)
 - [Managing Git History](#managing-git-history)
   - [Amending the last commit](#amending-the-last-commit)
   - [Rebasing commits](#rebasing-commits)
@@ -413,6 +414,14 @@ However, if there are changes in the local main branch are not present in the re
 A merge commit is automatically created in the local repository when executing a pull. If there is a conflict, you will have to resolve the conflict and commit the merge manually.
 
 ![Image: If there is no conflict, the commit will merge automatically.](images/git-pull-4.png)
+
+### Rebase Fails Due to Differences in Commit History
+
+`--force-with-lease` is safer than `--force`: it refuses to overwrite the remote branch if someone else has pushed changes you haven't fetched.
+
+```bash
+git push --force-with-lease
+```
 
 ## Managing Git History
 

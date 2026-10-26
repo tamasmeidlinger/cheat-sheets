@@ -26,6 +26,7 @@
   - [items()](#items)
   - [pop()](#pop)
   - [update()](#update)
+  - [setdefault()](#setdefault)
   - [Looping Over a Dictionary](#looping-over-a-dictionary)
   - [Unpacking a Dictionary](#unpacking-a-dictionary)
     - [Unpack values from a dictionary](#unpack-values-from-a-dictionary)
@@ -44,9 +45,24 @@
     - [Difference](#difference)
     - [Symmetric Difference](#symmetric-difference)
     - [Existance](#existance)
+  - [Immutable Sets - frozenset](#immutable-sets---frozenset)
+- [Comprehensions](#comprehensions)
+  - [List Comprehension](#list-comprehension)
+  - [Set Comprehension](#set-comprehension)
+  - [Dictionary Comprehension](#dictionary-comprehension)
 - [Built-ins](#built-ins)
-  - [Good to knows](#good-to-knows)
-  - [Cool to knows](#cool-to-knows)
+  - [sorted()](#sorted)
+  - [range()](#range)
+  - [enumerate()](#enumerate)
+  - [all() / any()](#all--any)
+  - [filter()](#filter)
+  - [map()](#map)
+  - [isinstance()](#isinstance)
+  - [ord()](#ord)
+  - [chr()](#chr)
+  - [dir()](#dir)
+  - [hash()](#hash)
+  - [id()](#id)
 - [Typing](#typing)
   - [Basic Types](#basic-types)
   - [Collection Types](#collection-types)
@@ -69,22 +85,23 @@
 ## Todo
 
 - [ ] vars() builtins
+- [ ] split() limit
 - [ ] OOP
 - [ ] Python import path - how to add things
 - [ ] Python Standard Library
 - [ ] dataclass
 - [ ] sys
 - path
+- getsizeof
 - [ ] pathlib
 - stdin/stdout
 - platform
 - [ ] subprocess
 - [ ] os
-- sys.path.append(os.path.dirname(__file__))
-- [ ] special variable like __file__
+- sys.path.append(os.path.dirname(**file**))
+- [ ] special variable like **file**
 - [ ] file openings
 - [ ] function args and kwargs spreading and stuff
-
 
 ## String
 
@@ -252,7 +269,7 @@ numbers.extend(even_numbers)
 print(numbers) # [1, 2, 3, 4, 5, 6, 8, 10]
 ```
 
-**insert(*index, item*)** - insert an item at a specific index in the list
+**insert(_index, item_)** - insert an item at a specific index in the list
 
 ```python
 numbers = [1, 2, 3, 4, 5]
@@ -275,7 +292,7 @@ numbers.remove(5)
 print(numbers) # [1, 2, 3, 4, 5, 5]
 ```
 
-**pop(*index*)** - remove a specific item from the list and return it
+**pop(_index_)** - remove a specific item from the list and return it
 
 > [!note]
 > If you don't specify an element for the pop method, then the last element is removed.
@@ -473,6 +490,31 @@ person.update({"age": 18, "city": "Vejle"})
 print(person.items())
 # dict_items([('name', 'Tamas'), ('age', 18), ('hobby', 'drumming'), ('city', 'Vejle')])
 ```
+
+### setdefault()
+
+**setdefault(key, default)** - get the value for a key, if the key doesn't exist, insert it with the given default value
+
+```python
+person = {"name": "Tamas", "age": 25}
+
+person_hobby = person.setdefault("hobby", "drumming")
+person_name = person.setdefault("name", "Anna")
+
+print(person_hobby)  # drumming
+print(person_name)  # Tamas
+print(person)  # {'name': 'Tamas', 'age': 25, 'hobby': 'drumming'}
+```
+
+```python
+person = {"name": "Tamas", "age": 25}
+
+person_hobby = person.setdefault("hobby")
+
+print(person_hobby)  # None
+print(person)  # {'name': 'Tamas', 'age': 25, 'hobby': None}
+```
+
 ### Looping Over a Dictionary
 
 ```python
@@ -676,16 +718,91 @@ my_set = {1, 2, 3, 4, 5}
 print(5 in my_set) # True
 ```
 
+### Immutable Sets - frozenset
+
+`frozenset` is an immutable version of a set.
+
+It contains unique, hashable elements that cannot be changed.
+
+| Property                |    set    | frozenset     |
+| :---------------------- | :-------: | :-----------: |
+| Mutable                 |    Yes    | No            |
+| add(), remove(), etc... | Supported | Not supported |
+| Set operations          | Supported | Supported     |
+| Use as dict key         |    No     | Yes           |
+
+```python
+permissions = frozenset(["read", "write", "read"])
+
+print(permissions)  # frozenset({'write', 'read'})
+
+groups = {frozenset(["Tamas", "Anna"]): "Team A", frozenset(["Muci", "Ocsi"]): "Team B"}
+
+group_1_name = groups[frozenset(["Tamas", "Anna"])]
+group_2_name = groups[frozenset(["Muci", "Ocsi"])]
+
+print(group_1_name)  # Team A
+print(group_2_name)  # Team B
+```
+
+## Comprehensions
+
+### List Comprehension
+
+```
+[ expression for element in iterable if condition ]
+```
+
+```python
+fruits_lower = ["orange", "strawberry", "banana", "ananas"]
+
+fruits_upper = [fruit.upper() for fruit in fruits_lower if fruit.count("a") >= 3]
+
+print(fruits_upper) # ['BANANA', 'ANANAS']
+```
+
+```python
+numbers = [1, 2, 3, 4]
+
+labels = ["Even" if x % 2 == 0 else "Odd" for x in numbers]
+
+print(labels)  # ['Odd', 'Even', 'Odd', 'Even']
+```
+
+### Set Comprehension
+
+```
+{ expression for element in iterable if condition }
+```
+
+### Dictionary Comprehension
+
+```
+{ key_expression : value_expression for element in iterable if condition }
+```
+
+```python
+food = {
+    "carrot": "vegetable",
+    "orange": "fruit",
+    "strawberry": "fruit",
+    "cabbage": "vegetable",
+}
+
+food_vegetable = {key: value for key, value in food.items() if value == "vegetable"}
+
+print(food_vegetable)  # {'carrot': 'vegetable', 'cabbage': 'vegetable'}
+```
+
 ## Built-ins
 
 **[Official Docs](https://docs.python.org/3.14/builtins/functions.html)**
 
-### Good to knows
+### sorted()
 
 **sorted()** - return a new sorted list from the items in iterable
 
 sorted(iterable, key=None, reverse=False)
-
 
 - `key` - a function used to extract a comparison key from each element
 
@@ -697,7 +814,19 @@ sorted(programming_languages, key=len)
 # ['C++', 'Rust', 'Java', 'Rust', 'Python', 'Python']
 ```
 
+```python
+students = [("Tamas", 80), ("Muci", 40), ("Anna", 60)]
+
+ranked = sorted(students, key=lambda student: student[1])
+
+print(ranked)  # [('Muci', 40), ('Anna', 60), ('Tamas', 80)]
+```
+
+### range()
+
 **range()** - range(start, stop, step=1)
+
+### enumerate()
 
 **enumerate()**
 
@@ -713,6 +842,8 @@ for index, member in enumerate(members, start=1):
 # 4 Muci
 ```
 
+### all() / any()
+
 **all() / any()** - return `True` if all/any elements of the iterable are true
 
 ```python
@@ -726,6 +857,8 @@ group = [
 all(person["age"] >= 18 for person in group)  # False
 any(person["age"] < 18 for person in group)  # True
 ```
+
+### filter()
 
 **filter()** - filter(function, iterable)
 
@@ -749,6 +882,29 @@ for p in filter(lambda p: p.startswith("T"), members):
 # Thomas
 ```
 
+### map()
+
+**map()** - return an iterator that applies function to every item of iterable, yielding the results
+
+```python
+numbers = [1, 2, 3, 4]
+
+doubled = list(map(lambda x: x * 2, numbers))
+
+print(doubled)  # [2, 4, 6, 8]
+```
+
+```python
+numbers = [1, 2, 3, 4]
+numbers_2 = [4, 3, 2, 1]
+
+sum = list(map(lambda x, y: x + y, numbers, numbers_2))
+
+print(sum)  # [5, 5, 5, 5]
+```
+
+### isinstance()
+
 **isinstance()**
 
 ```python
@@ -758,7 +914,7 @@ isinstance(name, int)  # False
 isinstance(name, (int, str))  # True
 ```
 
-### Cool to knows
+### ord()
 
 **ord() -> int** - return the ordinal value of a character
 
@@ -774,6 +930,8 @@ name = "Tamas"
 print(ord(name[0]) == 84)  # True
 ```
 
+### chr()
+
 **chr()** - return the string representing a character with the specified Unicode code point
 
 ```python
@@ -786,6 +944,8 @@ name = "Tamas"
 print(name[0] == chr(84))  # True
 ```
 
+### dir()
+
 **dir(object)** - attempt to return a list of valid attributes for that object.
 
 ```python
@@ -794,17 +954,56 @@ dir(str)  # ['capitalize', 'casefold', 'center', 'count', ...]
 print("startswith" in dir(str))  # True
 ```
 
+### hash()
+
+**hash()** - Return the hash value of the object (if it has one).
+
+Hash values are **integers**.
+
+```python
+fruit_1 = "orange"
+fruit_2 = "strawberry"
+
+print(hash(fruit_1))  # -5579361166400437433
+print(hash(fruit_2))  # -615438833989547485
+```
+
+```python
+# Hash collision
+a = int("-1")
+b = int("-2")
+
+print(hash(a), hash(b))
+# -2 -2
+```
+
+### id()
+
+**id()** - Return the “identity” of an object
+
+This is an integer which is guaranteed to be unique and constant for this object during its lifetime. Two objects with non-overlapping lifetimes may have the same `id()` value.
+
+**CPython implementation detail**: This is the address of the object in memory.
+
+```python
+a = int("-1")
+b = int("-2")
+
+print(id(a)) # 4389577432 for example
+print(id(b)) # 4389577400 for example
+```
+
 ## Typing
 
 ### Basic Types
 
-| Type | Description | Example |
-|---|---|---|
-| `str` | String / text | `"hello"` |
-| `int` | Integer | `42` |
-| `float` | Floating-point number | `3.14` |
-| `bool` | Boolean | `True`, `False` |
-| `None` | Absence of a value | `None` |
+| Type    | Description           | Example         |
+| ------- | --------------------- | --------------- |
+| `str`   | String / text         | `"hello"`       |
+| `int`   | Integer               | `42`            |
+| `float` | Floating-point number | `3.14`          |
+| `bool`  | Boolean               | `True`, `False` |
+| `None`  | Absence of a value    | `None`          |
 
 ```python
 name: str = "Alice"
@@ -816,12 +1015,12 @@ result: None = None
 
 ### Collection Types
 
-| Type | Description | Example |
-|---|---|---|
-| `list[T]` | List of T | `list[int]` |
-| `dict[K, V]` | Dictionary with key type K and value type V | `dict[str, int]` |
-| `set[T]` | Set of unique values | `set[str]` |
-| `tuple[T, ...]` | Tuple containing any number of T values | `tuple[int, ...]` |
+| Type            | Description                                   | Example           |
+| --------------- | --------------------------------------------- | ----------------- |
+| `list[T]`       | List of T                                     | `list[int]`       |
+| `dict[K, V]`    | Dictionary with key type K and value type V   | `dict[str, int]`  |
+| `set[T]`        | Set of unique values                          | `set[str]`        |
+| `tuple[T, ...]` | Tuple containing any number of T values       | `tuple[int, ...]` |
 | `tuple[T1, T2]` | Fixed tuple with specific types and positions | `tuple[str, int]` |
 
 ```python
@@ -834,14 +1033,14 @@ user: tuple[str, int] = ("Alice", 25)
 
 ### Nested Collections
 
-| Type | Description |
-|---|---|
-| `list[list[int]]` | List of lists of integers |
-| `list[dict[str, str]]` | List of dictionaries |
-| `dict[str, list[int]]` | Dictionary mapping strings to lists of integers |
-| `dict[str, dict[str, int]]` | Nested dictionary |
-| `list[tuple[float, float]]` | List of coordinate pairs |
-| `dict[int, str \| None]` | Dictionary with integer keys and optional string values |
+| Type                        | Description                                             |
+| --------------------------- | ------------------------------------------------------- |
+| `list[list[int]]`           | List of lists of integers                               |
+| `list[dict[str, str]]`      | List of dictionaries                                    |
+| `dict[str, list[int]]`      | Dictionary mapping strings to lists of integers         |
+| `dict[str, dict[str, int]]` | Nested dictionary                                       |
+| `list[tuple[float, float]]` | List of coordinate pairs                                |
+| `dict[int, str \| None]`    | Dictionary with integer keys and optional string values |
 
 ```python
 matrix: list[list[int]] = [[1, 2], [3, 4]]
@@ -862,11 +1061,11 @@ coordinates: list[tuple[float, float]] = [
 
 ### Union and Optional Types
 
-| Type | Description |
-|---|---|
-| `int \| str` | Integer or string |
-| `int \| float` | Integer or float |
-| `str \| None` | String or `None` |
+| Type                | Description               |
+| ------------------- | ------------------------- |
+| `int \| str`        | Integer or string         |
+| `int \| float`      | Integer or float          |
+| `str \| None`       | String or `None`          |
 | `list[str] \| None` | List of strings or `None` |
 
 ```python
@@ -878,12 +1077,12 @@ names: list[str] | None = None
 
 ### Function Annotations
 
-| Syntax | Description |
-|---|---|
-| `name: str` | Parameter type |
-| `-> int` | Return type |
-| `-> None` | No meaningful return value |
-| `*args: int` | Variable number of positional integer arguments |
+| Syntax          | Description                                             |
+| --------------- | ------------------------------------------------------- |
+| `name: str`     | Parameter type                                          |
+| `-> int`        | Return type                                             |
+| `-> None`       | No meaningful return value                              |
+| `*args: int`    | Variable number of positional integer arguments         |
 | `**kwargs: str` | Variable number of keyword arguments with string values |
 
 ```python
@@ -907,14 +1106,14 @@ def get_name(user_id: int) -> str | None:
 
 ### Useful Types from `typing`
 
-| Type | Description | Example |
-|---|---|---|
-| `Literal` | Restricts values to specific literals | `Literal["on", "off"]` |
-| `TypeAlias` | Explicitly declares a type alias | `UserId: TypeAlias = int` |
-| `TypedDict` | Defines a dictionary's expected keys and value types | `class User(TypedDict)` |
-| `NotRequired` | Marks a `TypedDict` key as optional | `nickname: NotRequired[str]` |
-| `Callable` | Describes a callable's signature | `Callable[[int], str]` |
-| `cast` | Tells the type checker to treat a value as a type | `cast(str, value)` |
+| Type          | Description                                          | Example                      |
+| ------------- | ---------------------------------------------------- | ---------------------------- |
+| `Literal`     | Restricts values to specific literals                | `Literal["on", "off"]`       |
+| `TypeAlias`   | Explicitly declares a type alias                     | `UserId: TypeAlias = int`    |
+| `TypedDict`   | Defines a dictionary's expected keys and value types | `class User(TypedDict)`      |
+| `NotRequired` | Marks a `TypedDict` key as optional                  | `nickname: NotRequired[str]` |
+| `Callable`    | Describes a callable's signature                     | `Callable[[int], str]`       |
+| `cast`        | Tells the type checker to treat a value as a type    | `cast(str, value)`           |
 
 ```python
 from typing import Literal, TypeAlias, TypedDict, NotRequired, Callable
@@ -984,13 +1183,13 @@ my_project/
     └── report.py
 ```
 
-| File | Purpose |
-|---|---|
-| `main.py` | Main entry point; runs the application |
-| `__init__.py` | Defines convenient package-level imports |
-| `math_utils.py` | Contains math functions |
-| `strings.py` | Contains string utilities |
-| `report.py` | Uses other modules and can run as a module |
+| File            | Purpose                                    |
+| --------------- | ------------------------------------------ |
+| `main.py`       | Main entry point; runs the application     |
+| `__init__.py`   | Defines convenient package-level imports   |
+| `math_utils.py` | Contains math functions                    |
+| `strings.py`    | Contains string utilities                  |
+| `report.py`     | Uses other modules and can run as a module |
 
 **Key idea:** A module is a `.py` file. A package is a directory containing related modules.
 
