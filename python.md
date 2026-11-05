@@ -71,6 +71,20 @@
   - [Function Annotations](#function-annotations)
   - [Useful Types from `typing`](#useful-types-from-typing)
   - [Type Aliases and Generics](#type-aliases-and-generics)
+- [Bitwise Operations \& Binary Data](#bitwise-operations--binary-data)
+  - [Conversions](#conversions)
+  - [Formatting binary numbers](#formatting-binary-numbers)
+  - [Bitwise operators](#bitwise-operators)
+    - [Bitwise `AND`, `OR`, `XOR`](#bitwise-and-or-xor)
+    - [Bitwise `NOT`](#bitwise-not)
+    - [Inverting bits](#inverting-bits)
+    - [Bitwise `SHIFT`](#bitwise-shift)
+    - [The four fundamental bit operations](#the-four-fundamental-bit-operations)
+    - [Checking whether a bit is set](#checking-whether-a-bit-is-set)
+    - [Setting a bit](#setting-a-bit)
+    - [Clearing a bit](#clearing-a-bit)
+    - [Toggling a bit](#toggling-a-bit)
+  - [Subnetting example](#subnetting-example)
 - [Python Imports \& Packages](#python-imports--packages)
   - [Directory overview](#directory-overview)
   - [Imports in a file](#imports-in-a-file)
@@ -102,6 +116,15 @@
 - [ ] special variable like **file**
 - [ ] file openings
 - [ ] function args and kwargs spreading and stuff
+- [ ] Add the below example, why does this work
+
+```python
+my_list = [1, 2, 5]
+
+my_list[2:2] = [3, 4]
+
+print(my_list)
+```
 
 ## String
 
@@ -724,12 +747,12 @@ print(5 in my_set) # True
 
 It contains unique, hashable elements that cannot be changed.
 
-| Property                |    set    | frozenset     |
+| Property                |    set    |   frozenset   |
 | :---------------------- | :-------: | :-----------: |
-| Mutable                 |    Yes    | No            |
+| Mutable                 |    Yes    |      No       |
 | add(), remove(), etc... | Supported | Not supported |
-| Set operations          | Supported | Supported     |
-| Use as dict key         |    No     | Yes           |
+| Set operations          | Supported |   Supported   |
+| Use as dict key         |    No     |      Yes      |
 
 ```python
 permissions = frozenset(["read", "write", "read"])
@@ -1168,6 +1191,226 @@ class Box[T]:  # Python 3.12+
 ```
 
 For Python 3.11 and earlier, use `TypeVar` and `Generic` for generic functions and classes.
+
+## Bitwise Operations & Binary Data
+
+### Conversions
+
+```python
+number_dec = 8
+number_bin = 0b1000
+number_hex = 0x0008
+
+print(bin(number_dec))  # 0b1000
+print(hex(number_dec))  # 0x8
+print(int(number_bin))  # 8
+print(int(number_hex))  # 8
+```
+
+```python
+# Second arg is the base
+print(int("1000", 2))  # 8
+print(int("000f", 16))  # 15
+```
+
+### Formatting binary numbers
+
+The `08b` means:
+
+- `b`: binary representation.
+- `8`: minimum width of 8 characters.
+- Leading zeros are added if necessary.
+
+```python
+number = 10
+
+print(format(number, "b"))  # 1010
+print(format(number, "08b"))  # 00001010
+print(format(number, "016b"))  # 0000000000001010
+
+print(format(157, "x"))  # 9d
+print(format(157, "02X"))  # 9D
+```
+
+### Bitwise operators
+
+| Operator | Name          |                    Purpose |
+| -------- | ------------- | -------------------------: |
+| `&`      | `AND`         |        Both bits must be 1 |
+| `\|`     | `OR`          | At least one bit must be 1 |
+| `^`      | `XOR`         |     Bits must be different |
+| `~`      | `NOT`         |               Inverts bits |
+| `>>`      | `Right shift` |           Moves bits right |
+| `<<`      | `Left shift` |           Moves bits left |
+
+#### Bitwise `AND`, `OR`, `XOR`
+
+```python
+bitwise_and = 0b0011 & 0b1101  # 0001
+bitwise_or = 0b1010 | 0b0101  # 1111
+bitwise_xor = 0b1011 ^ 0b0101  # 1110
+```
+
+#### Bitwise `NOT`
+
+> [!IMPORTANT]
+> Python's `~` inverts bits, but the result is interpreted as a **signed integer**, not an automatically fixed-width binary value.
+
+The mathematical relationship is:
+
+$\sim x = -x-1$
+
+```python
+x = 12
+
+print(~x)  # -13
+```
+
+#### Inverting bits
+
+```python
+x = 0b1101
+y = 0b10101010
+
+invert_x = (~x) & 0xF
+invert_y = (~y) & 0xFF
+
+invert_x_xor = x ^ 0xF
+
+print(format(invert_x, "04b"))
+# 0010
+print(format(invert_y, "08b"))
+# 01010101
+print(format(invert_x_xor, "04b"))
+# 0010
+```
+
+#### Bitwise `SHIFT`
+
+```python
+x = 0b1000
+
+print(format(x >> 1, "04b"))  # 0100
+print(format(x >> 3, "04b"))  # 0001
+print(format(x << 1, "04b"))  # 10000
+```
+
+#### The four fundamental bit operations
+
+| Goal | Operation | Formula |
+|---|---|---|
+| Check bit | AND | `value & mask` |
+| Set bit | OR | `value \| mask` |
+| Clear bit | AND + NOT | `value & ~mask` |
+| Toggle bit | XOR | `value ^ mask` |
+
+
+#### Checking whether a bit is set
+
+Suppose you want to check whether bit position 2 is `1`.
+
+Remember that bit positions start at zero, from the right.
+
+```python
+Position:  7 6 5 4 3 2 1 0
+Value:     1 0 1 1 0 1 1 0
+```
+
+Create a mask that has only bit 2 enabled then `AND` the value and the mask.
+
+```python
+value = 0b10110110
+mask = 1 << 2  # 0100
+
+result = value & mask
+
+print(result)  # 4
+print(result != 0)  # True
+```
+
+#### Setting a bit
+
+```python
+# Set bit 2 to "1"
+value = 0b1011
+mask = 1 << 2  # 0100
+result_1 = value | mask
+print(format(result_1, "04b"))  # 1111
+```
+
+#### Clearing a bit
+
+```python
+value = 0b11111111
+
+mask = 1 << 2
+
+value = value & ~mask
+
+print(format(value, "08b"))
+# 11111011
+```
+
+#### Toggling a bit
+
+```python
+value = 0b10110110
+
+mask = 1 << 2
+
+value = value ^ mask
+print(format(value, "08b"))  # 10110010
+value ^= mask
+print(format(value, "08b"))  # 10110110
+```
+
+### Subnetting example
+
+```
+IP address: 192.168.1.10
+Subnet:     255.255.255.0 (/24)
+```
+
+Convert to binary
+
+```
+IP:
+11000000.10101000.00000001.00001010
+
+Mask:
+11111111.11111111.11111111.00000000
+```
+
+Bitwise `AND`
+
+```
+IP:       11000000.10101000.00000001.00001010
+Mask:     11111111.11111111.11111111.00000000
+          -----------------------------------
+Result:   11000000.10101000.00000001.00000000
+
+192.168.1.0
+```
+
+```python
+from ipaddress import ip_address
+
+
+def ipv4_to_bin(ip_string: str) -> int:
+    octets = ip_string.split(".")
+    binary = "".join(format(int(octet), "08b") for octet in octets)
+    return int(binary, 2)
+
+
+ip_addr = "192.168.1.10"
+subnet = "255.255.255.0"
+
+ip_bin: int = ipv4_to_bin(ip_addr)
+subnet_bin: int = ipv4_to_bin(subnet)
+
+network = ip_bin & subnet_bin
+print(ip_address(network))  # 192.168.1.0
+```
 
 ## Python Imports & Packages
 

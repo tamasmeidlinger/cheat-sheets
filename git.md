@@ -33,6 +33,7 @@
   - [Fetching remote branches](#fetching-remote-branches)
   - [Pulling remote branches](#pulling-remote-branches)
   - [Rebase Fails Due to Differences in Commit History](#rebase-fails-due-to-differences-in-commit-history)
+  - [Change the remote to SSH](#change-the-remote-to-ssh)
 - [Managing Git History](#managing-git-history)
   - [Amending the last commit](#amending-the-last-commit)
   - [Rebasing commits](#rebasing-commits)
@@ -421,6 +422,12 @@ A merge commit is automatically created in the local repository when executing a
 
 ```bash
 git push --force-with-lease
+```
+
+### Change the remote to SSH
+
+```bash
+git remote set-url origin git@github.com:USERNAME/REPOSITORY.git
 ```
 
 ## Managing Git History
