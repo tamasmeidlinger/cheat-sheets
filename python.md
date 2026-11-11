@@ -123,8 +123,22 @@
     - [Absolute Imports](#absolute-imports)
     - [Relative Imports](#relative-imports)
     - [Running a Module](#running-a-module)
+- [OOP](#oop)
+  - [Python Classes and Objects](#python-classes-and-objects)
+    - [Attributes](#attributes)
+    - [Methods](#methods-1)
+    - [Dunder (Magic) Methods](#dunder-magic-methods)
+    - [Objects Working Together](#objects-working-together)
+  - [Object-Oriented Programming](#object-oriented-programming)
+    - [Encapsulation](#encapsulation)
+    - [Getters and Setters](#getters-and-setters)
+    - [Inheritance](#inheritance)
+    - [Polymorphism](#polymorphism)
+    - [Name Mangling](#name-mangling)
+    - [Abstraction](#abstraction)
+- [Working with Dates and Times](#working-with-dates-and-times)
 
-## Todo
+# Todo
 
 - [ ] vars() builtins
 - [ ] zip() builtins
@@ -155,9 +169,9 @@ my_list[2:2] = [3, 4]
 print(my_list)
 ```
 
-## String
+# String
 
-### str.strip()
+## str.strip()
 
 **strip()** - returns a copy of the string with specified leading and trailing characters removed
 
@@ -178,7 +192,7 @@ trimmed_greeting = greeting.strip("a")
 print(trimmed_greeting)  # hello world
 ```
 
-### str.replace()
+## str.replace()
 
 **replace()** - returns a new string with all occurrences of the old string replaced by a new one
 
@@ -189,7 +203,7 @@ replaced_my_str = greeting.replace("hello", "hi")
 print(replaced_my_str)  # hi, hi everyone
 ```
 
-### str.split()
+## str.split()
 
 **split()** - split a string into a list using a specified separator
 
@@ -206,7 +220,7 @@ print(split_words_dashed)  # ['example', 'dashed', 'name']
 print(split_words_whitespace)  # ['example', 'dashed', 'name']
 ```
 
-### str.join()
+## str.join()
 
 **join()** - join a collection of strings into one string with a separator
 
@@ -217,7 +231,7 @@ joined_space = " ".join(example_list)  # example dashed name
 joined_no_sep = "".join(example_list)  # exampledashedname
 ```
 
-### str.startswith() & str.endsswith()
+## str.startswith() & str.endsswith()
 
 **str.startswith(prefix) and str.endswith(suffix)** - returns a boolean indicating if a string starts/ends with the specified suffix, respectively
 
@@ -232,7 +246,7 @@ name.endswith("as")  # True
 name.endswith("i")  # False
 ```
 
-### str.find()
+## str.find()
 
 **find()** - returns the index of the first occurrence of a substring
 
@@ -248,7 +262,7 @@ city = 'Los Angeles'
 print(city.find('New')) # -1
 ```
 
-### str.count()
+## str.count()
 
 **str.count(substring)** - counts how many times a substring appears in a string
 
@@ -257,7 +271,7 @@ city = 'Los Angeles'
 print(city.count('e')) # 2
 ```
 
-### upper(), lower(), capitalize(), title()
+## upper(), lower(), capitalize(), title()
 
 **upper(), lower(), capitalize(), title()** - case characters in different ways
 
@@ -270,7 +284,7 @@ greeting.capitalize()  # Hello world !
 greeting.title()  # Hello World !
 ```
 
-### isupper(), islower()
+## isupper(), islower()
 
 **isupper(), islower()** - returns `True` if the string contains at least one cased character and all cased characters are upper/lowercase, respectively
 
@@ -284,7 +298,7 @@ dessert = 'chocolate cake'
 print(dessert.islower()) # True
 ```
 
-### str.maketrans()
+## str.maketrans()
 
 **str.maketrans()** - `str.maketrans()` creates a table of one-to-one character mappings
 
@@ -299,9 +313,9 @@ result_2 = "imot".translate(trans_table)  # 4321
 result_3 = "tomika".translate(trans_table)  # 1234ka
 ```
 
-## List
+# List
 
-### Adding items
+## Adding items
 
 **append()** - add an item to the end of the list
 
@@ -330,7 +344,7 @@ numbers.insert(2, 2.5)
 print(numbers) # [1, 2, 2.5, 3, 4, 5]
 ```
 
-### Removing items
+## Removing items
 
 **remove()** - remove an item from the list
 
@@ -371,7 +385,7 @@ numbers.clear()
 print(numbers) # []
 ```
 
-### Check if an Element Exists in a List
+## Check if an Element Exists in a List
 
 ```python
 programming_languages = ['Python', 'Java', 'C++', 'Rust']
@@ -380,7 +394,7 @@ programming_languages = ['Python', 'Java', 'C++', 'Rust']
 'JavaScript' in programming_languages # False
 ```
 
-### Unpacking Values from a List
+## Unpacking Values from a List
 
 ```python
 developer = ['Alice', 34, 'Rust Developer']
@@ -412,9 +426,9 @@ combined = [*a, *b]
 # [1, 2, 3, 4]
 ```
 
-### Other
+## Other
 
-#### sort()
+### sort()
 
 **sort()** - sort the elements in place
 
@@ -425,7 +439,7 @@ numbers.sort()
 print(numbers) # [1, 2, 19, 35, 41, 67]
 ```
 
-#### reverse()
+### reverse()
 
 **reverse()** - reverse the order of the elements in a list
 
@@ -436,7 +450,7 @@ numbers.reverse()
 print(numbers) # [1, 2, 3, 4, 5, 6]
 ```
 
-#### index()
+### index()
 
 **index()** - find the first index where an element can be found in a list
 
@@ -448,7 +462,7 @@ programming_languages = ['Rust', 'Java', 'Python', 'C++']
 programming_languages.index('Java') # 1
 ```
 
-#### count()
+### count()
 
 **count()** - determine how many times an item appears
 
@@ -457,9 +471,9 @@ programming_languages = ['Rust', 'Java', 'Python', 'C++', 'Rust']
 programming_languages.count('Rust') # 2
 ```
 
-## Dictionary
+# Dictionary
 
-### get()
+## get()
 
 **get()** - retrieves the value associated with a key
 
@@ -473,7 +487,7 @@ print(person.get("name", "Unknown"))  # Tamas
 print(person.get("namee", "Unknown"))  # Unknown
 ```
 
-### keys(), values()
+## keys(), values()
 
 **keys() and values()** - return a view object with all the keys and values in the dictionary, respectively
 
@@ -495,7 +509,7 @@ print(person.values())
 # dict_values(['Tamas', 25, 'drumming', 'Vejle'])
 ```
 
-### items()
+## items()
 
 **items()** - returns a view object with all the key-value pairs
 
@@ -506,7 +520,7 @@ print(person.items())
 # dict_items([('name', 'Tamas'), ('age', 25), ('hobby', 'drumming')])
 ```
 
-### pop()
+## pop()
 
 **pop()** - removes the key-value pair with the key specified as the first argument and returns its value
 
@@ -525,7 +539,7 @@ agee = person.pop("agee", "agee key not found")
 person.pop("something")  # KeyError
 ```
 
-### update()
+## update()
 
 **update()** - updates the key-value pairs with the key-value pairs of another dictionary
 
@@ -543,7 +557,7 @@ print(person.items())
 # dict_items([('name', 'Tamas'), ('age', 18), ('hobby', 'drumming'), ('city', 'Vejle')])
 ```
 
-### setdefault()
+## setdefault()
 
 **setdefault(key, default)** - get the value for a key, if the key doesn't exist, insert it with the given default value
 
@@ -567,7 +581,7 @@ print(person_hobby)  # None
 print(person)  # {'name': 'Tamas', 'age': 25, 'hobby': None}
 ```
 
-### Looping Over a Dictionary
+## Looping Over a Dictionary
 
 ```python
 person: dict = {"name": "Tamas", "age": 25, "hobby": "drumming"}
@@ -612,9 +626,9 @@ for key, value in person.items():
 # hobby: drumming
 ```
 
-### Unpacking a Dictionary
+## Unpacking a Dictionary
 
-#### Unpack values from a dictionary
+### Unpack values from a dictionary
 
 ```python
 person = {"name": "Alice", "age": 25, "city": "Odense"}
@@ -626,7 +640,7 @@ print(age)  # 25
 print(city)  # Odense
 ```
 
-#### Unpacking a dictionary with `**`
+### Unpacking a dictionary with `**`
 
 ```python
 def greet(name, age):
@@ -650,7 +664,7 @@ merged = {**a, **b}
 # {'x': 1, 'y': 2, 'z': 3}
 ```
 
-#### Unpacking a custom object
+### Unpacking a custom object
 
 ```python
 class Person:
@@ -673,28 +687,28 @@ greet(**vars(p))
 # Alice 25
 ```
 
-## Sets
+# Sets
 
-### Methods
+## Methods
 
-#### add()
+### add()
 
 **add()** - add an element to a set, passing the new element as an argument
 
-#### remove(), discard()
+### remove(), discard()
 
 **remove() and discard()** - remove an element from a set, passing the element you want to remove as an argument
 
 > [!important]
 > The `remove()` method will raise a `KeyError` if the element is not found while the `discard()` method will not.
 
-#### clear()
+### clear()
 
 **clear()** - remove all the elements from the set
 
-### Mathematical Set Operations
+## Mathematical Set Operations
 
-#### Subset, Superset
+### Subset, Superset
 
 **issubset() and issuperset()** - check if a set is a subset or superset of another set, respectively
 
@@ -706,7 +720,7 @@ print(your_set.issubset(my_set)) # True
 print(my_set.issuperset(your_set)) # True
 ```
 
-#### Disjoint
+### Disjoint
 
 **isdisjoint()** - checks if two sets are disjoint (they don't have elements in common)
 
@@ -717,7 +731,7 @@ your_set = {4, 5, 6}
 print(my_set.isdisjoint(your_set)) # True
 ```
 
-#### Union
+### Union
 
 **Union Operator `|`** - returns a new set with all the elements from both sets
 
@@ -728,7 +742,7 @@ your_set = {4, 5, 6}
 my_set | your_set # {1, 2, 3, 4, 5, 6}
 ```
 
-#### Intersection
+### Intersection
 
 **Intersection Operator `&`** - returns a new set with only the elements that the sets have in common
 
@@ -739,7 +753,7 @@ your_set = {2, 3, 4, 6}
 my_set & your_set # {2, 3, 4}
 ```
 
-#### Difference
+### Difference
 
 **Difference Operator `-`** - returns a new set with the elements of the first set that are not in the other set
 
@@ -750,7 +764,7 @@ your_set = {2, 3, 4, 6}
 my_set - your_set # {1, 5}
 ```
 
-#### Symmetric Difference
+### Symmetric Difference
 
 **Symmetric Difference Operator `^`** - returns a new set with the elements that are either in the first or the second set, but not both.
 
@@ -761,7 +775,7 @@ your_set = {2, 3, 4, 6}
 my_set ^ your_set # {1, 5, 6}
 ```
 
-#### Existance
+### Existance
 
 **`in` operator** - check if an element is in a set or not with the `in` operator
 
@@ -770,7 +784,7 @@ my_set = {1, 2, 3, 4, 5}
 print(5 in my_set) # True
 ```
 
-### Immutable Sets - frozenset
+## Immutable Sets - frozenset
 
 `frozenset` is an immutable version of a set.
 
@@ -797,9 +811,9 @@ print(group_1_name)  # Team A
 print(group_2_name)  # Team B
 ```
 
-## Comprehensions
+# Comprehensions
 
-### List Comprehension
+## List Comprehension
 
 ```
 [ expression for element in iterable if condition ]
@@ -821,13 +835,13 @@ labels = ["Even" if x % 2 == 0 else "Odd" for x in numbers]
 print(labels)  # ['Odd', 'Even', 'Odd', 'Even']
 ```
 
-### Set Comprehension
+## Set Comprehension
 
 ```
 { expression for element in iterable if condition }
 ```
 
-### Dictionary Comprehension
+## Dictionary Comprehension
 
 ```
 { key_expression : value_expression for element in iterable if condition }
@@ -846,11 +860,11 @@ food_vegetable = {key: value for key, value in food.items() if value == "vegetab
 print(food_vegetable)  # {'carrot': 'vegetable', 'cabbage': 'vegetable'}
 ```
 
-## Built-ins
+# Built-ins
 
 **[Official Docs](https://docs.python.org/3.14/builtins/functions.html)**
 
-### sorted()
+## sorted()
 
 **sorted()** - return a new sorted list from the items in iterable
 
@@ -874,11 +888,11 @@ ranked = sorted(students, key=lambda student: student[1])
 print(ranked)  # [('Muci', 40), ('Anna', 60), ('Tamas', 80)]
 ```
 
-### range()
+## range()
 
 **range()** - range(start, stop, step=1)
 
-### enumerate()
+## enumerate()
 
 **enumerate()**
 
@@ -894,7 +908,7 @@ for index, member in enumerate(members, start=1):
 # 4 Muci
 ```
 
-### all() / any()
+## all() / any()
 
 **all() / any()** - return `True` if all/any elements of the iterable are true
 
@@ -910,7 +924,7 @@ all(person["age"] >= 18 for person in group)  # False
 any(person["age"] < 18 for person in group)  # True
 ```
 
-### filter()
+## filter()
 
 **filter()** - filter(function, iterable)
 
@@ -934,7 +948,7 @@ for p in filter(lambda p: p.startswith("T"), members):
 # Thomas
 ```
 
-### map()
+## map()
 
 **map()** - return an iterator that applies function to every item of iterable, yielding the results
 
@@ -955,7 +969,7 @@ sum = list(map(lambda x, y: x + y, numbers, numbers_2))
 print(sum)  # [5, 5, 5, 5]
 ```
 
-### isinstance()
+## isinstance()
 
 **isinstance()**
 
@@ -966,7 +980,7 @@ isinstance(name, int)  # False
 isinstance(name, (int, str))  # True
 ```
 
-### ord()
+## ord()
 
 **ord() -> int** - return the ordinal value of a character
 
@@ -982,7 +996,7 @@ name = "Tamas"
 print(ord(name[0]) == 84)  # True
 ```
 
-### chr()
+## chr()
 
 **chr()** - return the string representing a character with the specified Unicode code point
 
@@ -996,7 +1010,7 @@ name = "Tamas"
 print(name[0] == chr(84))  # True
 ```
 
-### dir()
+## dir()
 
 **dir(object)** - attempt to return a list of valid attributes for that object.
 
@@ -1006,7 +1020,7 @@ dir(str)  # ['capitalize', 'casefold', 'center', 'count', ...]
 print("startswith" in dir(str))  # True
 ```
 
-### hash()
+## hash()
 
 **hash()** - Return the hash value of the object (if it has one).
 
@@ -1029,7 +1043,7 @@ print(hash(a), hash(b))
 # -2 -2
 ```
 
-### id()
+## id()
 
 **id()** - Return the “identity” of an object
 
@@ -1045,9 +1059,9 @@ print(id(a)) # 4389577432 for example
 print(id(b)) # 4389577400 for example
 ```
 
-## Typing
+# Typing
 
-### Basic Types
+## Basic Types
 
 | Type    | Description           | Example         |
 | ------- | --------------------- | --------------- |
@@ -1065,7 +1079,7 @@ active: bool = True
 result: None = None
 ```
 
-### Collection Types
+## Collection Types
 
 | Type            | Description                                   | Example           |
 | --------------- | --------------------------------------------- | ----------------- |
@@ -1083,7 +1097,7 @@ scores: tuple[int, ...] = (10, 20, 30)
 user: tuple[str, int] = ("Alice", 25)
 ```
 
-### Nested Collections
+## Nested Collections
 
 | Type                        | Description                                             |
 | --------------------------- | ------------------------------------------------------- |
@@ -1111,7 +1125,7 @@ coordinates: list[tuple[float, float]] = [
 ]
 ```
 
-### Union and Optional Types
+## Union and Optional Types
 
 | Type                | Description               |
 | ------------------- | ------------------------- |
@@ -1127,7 +1141,7 @@ number: int | float = 3.14
 names: list[str] | None = None
 ```
 
-### Function Annotations
+## Function Annotations
 
 | Syntax          | Description                                             |
 | --------------- | ------------------------------------------------------- |
@@ -1156,7 +1170,7 @@ def get_name(user_id: int) -> str | None:
     return None
 ```
 
-### Useful Types from `typing`
+## Useful Types from `typing`
 
 | Type          | Description                                          | Example                      |
 | ------------- | ---------------------------------------------------- | ---------------------------- |
@@ -1204,7 +1218,7 @@ def titlecase_every_char(word: str) -> str:
 transform_command("title-case-word", titlecase_every_char)  # Title-Case-Word
 ```
 
-### Type Aliases and Generics
+## Type Aliases and Generics
 
 ```python
 # Python 3.12+
@@ -1221,9 +1235,9 @@ class Box[T]:  # Python 3.12+
 
 For Python 3.11 and earlier, use `TypeVar` and `Generic` for generic functions and classes.
 
-## Bitwise Operations & Binary Data
+# Bitwise Operations & Binary Data
 
-### Conversions
+## Conversions
 
 ```python
 number_dec = 8
@@ -1242,7 +1256,7 @@ print(int("1000", 2))  # 8
 print(int("000f", 16))  # 15
 ```
 
-### Formatting binary numbers
+## Formatting binary numbers
 
 The `08b` means:
 
@@ -1261,7 +1275,7 @@ print(format(157, "x"))  # 9d
 print(format(157, "02X"))  # 9D
 ```
 
-### Bitwise operators
+## Bitwise operators
 
 | Operator | Name          |                    Purpose |
 | -------- | ------------- | -------------------------: |
@@ -1272,7 +1286,7 @@ print(format(157, "02X"))  # 9D
 | `>>`      | `Right shift` |           Moves bits right |
 | `<<`      | `Left shift` |           Moves bits left |
 
-#### Bitwise `AND`, `OR`, `XOR`
+### Bitwise `AND`, `OR`, `XOR`
 
 ```python
 bitwise_and = 0b0011 & 0b1101  # 0001
@@ -1280,7 +1294,7 @@ bitwise_or = 0b1010 | 0b0101  # 1111
 bitwise_xor = 0b1011 ^ 0b0101  # 1110
 ```
 
-#### Bitwise `NOT`
+### Bitwise `NOT`
 
 > [!IMPORTANT]
 > Python's `~` inverts bits, but the result is interpreted as a **signed integer**, not an automatically fixed-width binary value.
@@ -1295,7 +1309,7 @@ x = 12
 print(~x)  # -13
 ```
 
-#### Inverting bits
+### Inverting bits
 
 ```python
 x = 0b1101
@@ -1314,7 +1328,7 @@ print(format(invert_x_xor, "04b"))
 # 0010
 ```
 
-#### Bitwise `SHIFT`
+### Bitwise `SHIFT`
 
 ```python
 x = 0b1000
@@ -1324,7 +1338,7 @@ print(format(x >> 3, "04b"))  # 0001
 print(format(x << 1, "04b"))  # 10000
 ```
 
-#### The four fundamental bit operations
+### The four fundamental bit operations
 
 | Goal | Operation | Formula |
 |---|---|---|
@@ -1334,7 +1348,7 @@ print(format(x << 1, "04b"))  # 10000
 | Toggle bit | XOR | `value ^ mask` |
 
 
-#### Checking whether a bit is set
+### Checking whether a bit is set
 
 Suppose you want to check whether bit position 2 is `1`.
 
@@ -1357,7 +1371,7 @@ print(result)  # 4
 print(result != 0)  # True
 ```
 
-#### Setting a bit
+### Setting a bit
 
 ```python
 # Set bit 2 to "1"
@@ -1367,7 +1381,7 @@ result_1 = value | mask
 print(format(result_1, "04b"))  # 1111
 ```
 
-#### Clearing a bit
+### Clearing a bit
 
 ```python
 value = 0b11111111
@@ -1380,7 +1394,7 @@ print(format(value, "08b"))
 # 11111011
 ```
 
-#### Toggling a bit
+### Toggling a bit
 
 ```python
 value = 0b10110110
@@ -1393,7 +1407,7 @@ value ^= mask
 print(format(value, "08b"))  # 10110110
 ```
 
-### Subnetting example
+## Subnetting example
 
 ```
 IP address: 192.168.1.10
@@ -1441,7 +1455,7 @@ network = ip_bin & subnet_bin
 print(ip_address(network))  # 192.168.1.0
 ```
 
-### `bytes`
+## `bytes`
 
 A built-in type that represents an immutable sequence of integers, where each integer must be between 0 and 255.
 
@@ -1458,7 +1472,7 @@ print(data[1])  # 66
 print(data[2])  # 67
 ```
 
-### `bytearray`
+## `bytearray`
 
 Mutable sequence of bytes
 
@@ -1503,7 +1517,7 @@ for byte in bytes([65, 66, 67]):
 # 67
 ```
 
-### Creating empty or zero-filled bytes
+## Creating empty or zero-filled bytes
 
 - `bytes()` creates an empty sequence.
 - `bytes(4)` creates a sequence containing four zero bytes.
@@ -1516,7 +1530,7 @@ print(a)  # b''
 print(b)  # b'\x00\x00\x00\x00'
 ```
 
-### `bytes.fromhex()`
+## `bytes.fromhex()`
 
 - `data1[0]` uses indexing. It returns one integer representing the byte at index 0.
 - `data2[0:2]` uses slicing. It returns a new bytes object containing bytes at indices 0 and 1.
@@ -1532,7 +1546,7 @@ print(data1[0])  # 65
 print(data2[0:2])  # b'AB'
 ```
 
-### Converting integers to bytes
+## Converting integers to bytes
 
 Imagine you have this integer:
 
@@ -1546,7 +1560,7 @@ What if you want to store that integer in a binary file or send it over a networ
 
 You need to decide how many bytes to use and how to arrange them.
 
-#### `int.to_bytes(length, byteorder, signed)`
+### `int.to_bytes(length, byteorder, signed)`
 
 1. `length` - represent the integer using exactly `x` bytes
 2. `byteorder` - store the most significant byte first
@@ -1583,7 +1597,7 @@ print(data2)  # b'\x03\xe8'
 print(data2.hex())  # 03e8
 ```
 
-### Convert from `bytes` to `int`
+## Convert from `bytes` to `int`
 
 ```python
 data = bytes.fromhex("00 01")
@@ -1595,7 +1609,7 @@ print(number_big)  # 1
 print(number_little)  # 256
 ```
 
-### Overflow Error
+## Overflow Error
 
 1 byte is not enough to represent `1000`
 
@@ -1609,7 +1623,7 @@ big = number.to_bytes(1, byteorder="little")
 # OverflowError: int too big to convert
 ```
 
-### Signed integers
+## Signed integers
 
 Python integers **don't** have a fixed width.
 
@@ -1634,7 +1648,7 @@ neg_num_s_false = (-100).to_bytes(2, "big", signed=False)
 # OverflowError: can't convert negative int to unsigned
 ```
 
-### Encoding and decoding
+## Encoding and decoding
 
 Computers often need to transmit or store text as bytes.
 
@@ -1646,7 +1660,7 @@ Python provides two particularly important methods:
 - `.encode()` — string to bytes.
 - `.decode()` — bytes to string.
 
-#### ASCII
+### ASCII
 
 ```python
 text = "ABC"
@@ -1657,7 +1671,7 @@ print(data)  # b'ABC'
 print(data.hex())  # 414243
 ```
 
-#### UTF-8
+### UTF-8
 
 ```python
 text = "Café"
@@ -1672,9 +1686,9 @@ cafe_text = cafe_hex.decode("utf-8")
 print(cafe_text)  # Café
 ```
 
-### Reading and writing hexadecimal bytes
+## Reading and writing hexadecimal bytes
 
-#### Convert bytes to hexadecimal
+### Convert bytes to hexadecimal
 
 ```python
 data = bytes([72, 101, 108, 108, 111])
@@ -1684,7 +1698,7 @@ print(data.hex())  # 48656c6c6f
 print(data.hex(" "))  # 48 65 6c 6c 6f
 ```
 
-#### Convert hexadecimal into bytes
+### Convert hexadecimal into bytes
 
 ```python
 data = bytes.fromhex("48 65 6c 6c 6f")
@@ -1692,7 +1706,7 @@ data = bytes.fromhex("48 65 6c 6c 6f")
 print(data)  # b'Hello'
 ```
 
-#### Change individual bytes using hexadecimal
+### Change individual bytes using hexadecimal
 
 ```python
 data = bytearray.fromhex("48 65 6c 6c 6f")
@@ -1704,7 +1718,7 @@ print(data.hex(" "))  # 4a 65 6c 6c 6f
 print(data)  # bytearray(b'Jello')
 ```
 
-#### Hexadecimal as a debugging tool
+### Hexadecimal as a debugging tool
 
 You might eventually encounter something like this when inspecting a file or network packet:
 
@@ -1737,9 +1751,9 @@ def
 00000020: 6465 660a                                def.
 ```
 
-### Integer Methods
+## Integer Methods
 
-#### `bit_length()`
+### `bit_length()`
 
 `bit_length()` tells you how many bits are needed to represent an integer in binary, excluding the sign and leading zeros.
 
@@ -1754,7 +1768,7 @@ print(bin(y))  # -0b1010
 print(y.bit_length())  # 4
 ```
 
-#### `bit_count()`
+### `bit_count()`
 
 `bit_count()` counts how many 1 bits appear in the binary representation of the integer's absolute value.
 
@@ -1765,7 +1779,7 @@ print(bin(x))  # 0b1101
 print(x.bit_count())  # 3
 ```
 
-#### `to_bytes()`
+### `to_bytes()`
 
 This method converts an integer into a sequence of bytes.
 
@@ -1778,7 +1792,7 @@ print(data)  # b'\x03\xe8'
 print(data.hex())  # 03e8
 ```
 
-#### `from_bytes()`
+### `from_bytes()`
 
 It converts bytes back into an integer.
 
@@ -1792,7 +1806,7 @@ number = int.from_bytes(data, "big", signed=True)
 print(number)  # -5
 ```
 
-#### `int.as_integer_ratio()`
+### `int.as_integer_ratio()`
 
 This method expresses an integer as a fraction consisting of a numerator and denominator.
 
@@ -1821,7 +1835,7 @@ print(z.as_integer_ratio())
 # (19, 2)
 ```
 
-### `struct` module
+## `struct` module
 
 The struct module lets you convert Python values into binary data structures and back again.
 
@@ -1838,7 +1852,7 @@ The struct module lets you convert Python values into binary data structures and
 | `f` | 32-bit float |
 | `d` | 64-bit float |
 
-#### Pack
+### Pack
 
 ```python
 import struct
@@ -1849,7 +1863,7 @@ print(data)  # b'\x03\xe8'
 print(data.hex())  # 03e8
 ```
 
-#### Unpack
+### Unpack
 
 ```python
 import struct
@@ -1861,7 +1875,7 @@ result = struct.unpack(">H", data)
 print(result)  # (1000,)
 ```
 
-#### (Un)packing multiple values
+### (Un)packing multiple values
 
 ```python
 import struct
@@ -1874,7 +1888,7 @@ print(struct.unpack(">BH", data))
 # (255, 1000)
 ```
 
-#### Why `struct` is useful
+### Why `struct` is useful
 
 Imagine creating a binary file format with this structure:
 
@@ -1898,9 +1912,9 @@ print(size)  # 1024
 print(temperature)  # 23.5
 ```
 
-## Python Imports & Packages
+# Python Imports & Packages
 
-### Directory overview
+## Directory overview
 
 ```text
 my_project/
@@ -1922,7 +1936,7 @@ my_project/
 
 **Key idea:** A module is a `.py` file. A package is a directory containing related modules.
 
-### Imports in a file
+## Imports in a file
 
 **`math_utils.py`**
 
@@ -1947,7 +1961,7 @@ from my_package.math_utils import add
 print(add(2, 3))
 ```
 
-### Imports in `__init__.py`
+## Imports in `__init__.py`
 
 **`my_package/__init__.py`**
 
@@ -1967,7 +1981,7 @@ print(add(2, 3))
 print(greet("Alex"))
 ```
 
-### Running separate modules in a package
+## Running separate modules in a package
 
 **`my_package/report.py`**
 
@@ -1991,9 +2005,9 @@ python -m my_package.report
 
 Running `python my_package/report.py` directly won't work with that relative import.
 
-### Absolute vs. Relative Imports
+## Absolute vs. Relative Imports
 
-#### Directory structure
+### Directory structure
 
 ```text
 my_project/
@@ -2006,7 +2020,7 @@ my_project/
         └── report.py
 ```
 
-#### Absolute Imports
+### Absolute Imports
 
 An absolute import uses the full path from the import root (usually `my_project/`).
 
@@ -2023,7 +2037,7 @@ from my_package.math_utils import add
 print(add(2, 3))
 ```
 
-#### Relative Imports
+### Relative Imports
 
 A relative import uses dots to locate a module relative to the current package.
 
@@ -2041,7 +2055,7 @@ from ..math_utils import add
 
 So `..math_utils` refers to `my_package.math_utils`.
 
-#### Running a Module
+### Running a Module
 
 Relative imports require Python to know the module's package context.
 
@@ -2060,3 +2074,508 @@ python my_package/reports/report.py
 ```
 
 can fail with a relative-import error because Python treats it as a standalone script.
+
+# OOP
+
+- [ ] type()
+- [ ] isinstance()
+- [ ]
+
+## Python Classes and Objects
+
+**Class Definition**: A class is a blueprint for creating objects. It defines the behavior an object will have through its attributes and methods. Here is a basic example of a class definition in Python:
+
+```python
+class Dog:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def bark(self):
+        print(f'{self.name.upper()} says woof woof!')
+```
+
+- **Class Names**: By convention, class names use PascalCase: each word starts with a capital letter and there are no underscores, as in Dog or ShoppingCart.
+- **The `__init__()` Method**: Python calls __init__() automatically every time you create a new object. It's used to set up the object's initial attributes.
+- **The `self` Parameter**: self refers to the specific object the method is working on. Python passes it automatically when you call a method on an object, so you don't write it in the call. self is the conventional name, but it's always the first parameter of an instance method.
+- **Creating Objects**: Objects are instances of a class. They are created by calling the class with the necessary arguments.
+
+```python
+dog1 = Dog('Jack', 3)
+dog2 = Dog('Thatcher', 5)
+
+dog1.bark()  # JACK says woof woof!
+dog2.bark()  # THATCHER says woof woof!
+```
+
+- **Calling Methods on Objects**: You can call methods on objects to perform actions or retrieve information.
+
+```python
+object_name1.method_name()
+object_name2.method_name()
+```
+
+- **Difference Between Class and Object**: A class is a reusable template, while an object is a specific instance of that class with actual data.
+
+### Attributes
+
+- **Instance Attributes**: Usually defined in __init__() using self, and unique to each object.
+- **Class Attributes**: Defined directly inside the class and shared by all instances.
+
+```python
+class Dog:
+    species = 'French Bulldog'  # Class attribute
+
+    def __init__(self, name):
+        self.name = name  # Instance attribute
+
+print(Dog.species) # French Bulldog
+
+jack = Dog('Jack')
+print(jack.name)     # Jack
+print(jack.species)  # French Bulldog
+```
+
+- **Handling Attributes Dynamically**: Sometimes the attribute name is only known at runtime, for example when it comes from user input or a loop. In that case you can't write object.name, so you use functions that take the name as a string:
+
+    - `getattr(obj, name)` returns the attribute's value. It raises an `AttributeError` if the attribute doesn't exist, unless you pass a default value as a third argument.
+
+    - `setattr(obj, name, value)` creates or updates an attribute.
+
+    - `hasattr(obj, name)` returns True if the attribute exists, otherwise False.
+
+    - `delattr(obj, name)` deletes an attribute.
+
+```python
+class Dog:
+    def __init__(self, name):
+        self.name = name
+
+dog = Dog('Jack')
+
+print(getattr(dog, 'name'))            # Jack
+print(getattr(dog, 'age', 'unknown'))  # unknown
+getattr(dog, 'age')                    # AttributeError
+
+setattr(dog, 'age', 3)
+print(hasattr(dog, 'age'))  # True
+
+delattr(dog, 'age')
+print(hasattr(dog, 'age'))  # False
+```
+
+- **Inspecting Attributes with `dir()`**: The `dir()` function returns a list with the names of an object's attributes and methods. Combine it with `callable()` to separate methods from data attributes.
+
+```python
+class Dog:
+    def __init__(self, name):
+        self.name = name
+
+    def bark(self):
+        print('woof')
+
+dog = Dog('Jack')
+names = [n for n in dir(dog) if not n.startswith('__')]
+
+print([n for n in names if callable(getattr(dog, n))])      # ['bark']
+print([n for n in names if not callable(getattr(dog, n))])  # ['name']
+```
+
+### Methods
+
+- **Methods**: Functions defined inside a class that operate on the object's attributes.
+
+```python
+class Car:
+    def __init__(self, color, model):
+        self.color = color
+        self.model = model
+
+    def describe(self):
+        return f'This car is a {self.color} {self.model}'
+
+my_car_1 = Car('red', 'Tesla Model S')
+print(my_car_1.describe())  # This car is a red Tesla Model S
+```
+
+### Dunder (Magic) Methods
+
+- **Definition**: Special methods that start and end with a double underscore (e.g., `__init__`, `__len__`, `__str__`, `__eq__`). Python uses them internally for built-in operations.
+
+- **Behavior Without Custom Special Methods**: Python does not infer how built-in operations should use a custom object's attributes. It uses inherited default behavior where available and raises a `TypeError` for unsupported operations.
+
+```python
+class Book:
+    def __init__(self, title, pages):
+        self.title = title
+        self.pages = pages
+
+book1 = Book('Built Wealth Like a Boss', 420)
+book2 = Book('Another Book', 420)
+
+print(book1)           # <__main__.Book object at 0x...>
+print(book1 == book2)  # False
+len(book1)             # TypeError: object of type 'Book' has no len()
+```
+
+```python
+class Book:
+    def __init__(self, title, pages):
+        self.title = title
+        self.pages = pages
+
+    def __len__(self):
+        return self.pages
+
+    def __str__(self):
+        return f"'{self.title}' has {self.pages} pages"
+
+    def __eq__(self, other):
+        return self.pages == other.pages
+
+book1 = Book('Built Wealth Like a Boss', 420)
+print(len(book1))        # 420
+print(str(book1))        # 'Built Wealth Like a Boss' has 420 pages
+```
+
+- **What the Custom Methods Change**:
+  - `__len__()` makes `len()` return the page count instead of raising an error.
+  - `__str__()` replaces the default representation with a readable summary.
+  - `__eq__()` makes `==` compare the page counts instead of checking whether both names refer to the same object.
+
+```python
+book2 = Book('Another Book', 420)
+
+print(book1 == book2)  # True
+```
+
+- **Calling dunder methods indirectly**: You don't need to call dunder methods directly. Instead, Python automatically calls them when certain actions happen. These operations include:
+
+    - **arithmetic operations like addition, subtraction, multiplication, division, and others**. `__add__()` is called for addition, `__sub__()` for subtraction, `__mul__()` for multiplication, and `__truediv__()` for division.
+
+    - **string operations like concatenation, repetition, formatting, and conversion to text**. `__add__()` is called for concatenation, `__mul__()` for repetition, `__format__()` for formatting, `__str__()` and `__repr__()` for text conversion, and so on.
+
+    - **comparison operations like equality, less-than, greater-than, and others**. `__eq__()` is called for equality checks, `__lt__()` for less-than, `__gt__()` for greater-than, and so on.
+
+    - **iteration operations like making an object iterable and advancing through items**. `__iter__()` is called to return an iterator and `__next__()` to fetch the next item.
+
+**Example: Shopping Cart**
+
+- **Cart Class with Dunder Methods**: Allows adding, removing, iterating, and checking contents with built-in behavior.
+
+```python
+class Cart:
+    def __init__(self):
+        self.items = []
+
+    def add(self, item):
+        self.items.append(item)
+
+    def remove(self, item):
+        if item in self.items:
+            self.items.remove(item)
+        else:
+            print(f'{item} is not in cart')
+
+    def list_items(self):
+        return self.items
+
+    def __len__(self):
+        return len(self.items)
+
+    def __getitem__(self, index):
+        return self.items[index]
+
+    def __contains__(self, item):
+        return item in self.items
+
+    def __iter__(self):
+        return iter(self.items)
+
+cart = Cart()
+cart.add('Laptop')
+print(len(cart))        # 1
+print('Laptop' in cart) # True
+```
+
+### Objects Working Together
+
+- **Passing Objects as Arguments**: Objects can be passed to other classes' constructors, just like numbers or strings.
+
+- **Storing Objects in Attributes**: An object can be stored in another object's attribute. You can then call methods through that attribute by chaining the dot notation, as in `receiver.inbox.receive_email(email)`.
+
+```python
+class Email:
+    def __init__(self, sender, receiver, body):
+        self.sender = sender      # A User object
+        self.receiver = receiver  # A User object
+        self.body = body
+
+class Inbox:
+    def __init__(self):
+        self.emails = []
+
+    def receive_email(self, email):
+        self.emails.append(email)
+
+class User:
+    def __init__(self, name):
+        self.name = name
+        self.inbox = Inbox()  # Each User gets its own Inbox object
+
+sender = User('Ada')
+receiver = User('Grace')
+
+email = Email(sender, receiver, 'Hello!')
+receiver.inbox.receive_email(email)
+
+print(receiver.inbox.emails[0].body)         # Hello!
+print(receiver.inbox.emails[0].sender.name)  # Ada
+```
+
+## Object-Oriented Programming
+
+- **Object-oriented programming**: A programming style in which developers treat everything in their code like a real-world object. It is popularly called OOP. The four key principles that help you organize and manage code effectively are **encapsulation**, **inheritance**, **polymorphism**, and **abstraction**.
+
+- **Classes**: The blueprint for creating objects. Every single object created from a class has attributes that define data and methods that determine the behaviors of the object.
+
+### Encapsulation
+
+- **Encapsulation**: The bundling of the attributes and methods of an object into a single unit. It lets you hide the internal state of the object behind a simple set of public methods and attributes that act like doors. Behind those doors are private attributes and methods that control how the data changes and who can see it.
+
+- **Example of Encapsulation**: If you want to track a wallet balance, you will allow deposit and withdrawal, but you won't want anyone to tamper with the wallet balance itself:
+
+```python
+class Wallet:
+   def __init__(self, balance):
+       self.__balance = balance # Private attribute
+
+   def deposit(self, amount):
+       if amount > 0:
+           self.__balance += amount # Add to the balance safely
+
+   def withdraw(self, amount):
+       if 0 < amount <= self.__balance:
+           self.__balance -= amount # Remove from the balance safely
+
+account = Wallet(500)
+print(account.__balance) # AttributeError: 'Wallet' object has no attribute '__balance'
+```
+
+- **Difference Between Prefixing Attributes with Single and Double Underscore**: Prefixing attributes and methods with a single underscore signals that they are meant for internal use. This is only a convention, and Python doesn't restrict access to them from outside the class. Prefixing attributes and methods with a double underscore triggers name mangling, which renames `__balance` to `_Wallet__balance`. This helps avoid accidental name collisions in subclasses, but it doesn't make outside access impossible:
+
+```python
+print(account._Wallet__balance) # 500
+```
+
+### Getters and Setters
+
+- **Getters and Setters**: Methods that let you control how the attributes of a class are accessed and modified. You retrieve values with getters and you set values with setters.
+
+- **Properties**: They connect getters and setters, and allow access to data. They run extra logic behind the scenes when you get, set, or delete values.
+
+- **Why Properties Instead of Methods**: Properties are used instead of methods for better readability and cleaner code. They let you access values with dot notation, like regular attributes, without parentheses.
+
+- **Decorators**: A decorator is a function that modifies or wraps other functions, or classes, without changing their original code. You apply a decorator by placing **@decorator_name** directly above a function or class definition. For example, placing the **@property** decorator above a method turns it into a property, so it can be accessed like an attribute while internally calling the decorated method.
+
+- **Creating a Getter**: To create a getter, you use the **@property** decorator. Here's a getter that gets the radius of a circle:
+
+```python
+class Circle:
+    def __init__(self, radius):
+        self._radius = radius
+
+    @property
+    def radius(self): # A getter to get the radius
+        return self._radius
+
+    @property
+    def area(self):  # A getter to calculate area
+        return 3.14 * (self._radius ** 2)
+
+my_circle = Circle(3)
+
+print(my_circle.radius) # 3
+print(my_circle.area) # 28.26
+```
+
+- **Creating a Setter**: To create the setter that will set the radius, you have to define another method with the same name and use `@<property_name>.setter` above it:
+
+```python
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+
+    @property
+    def radius(self):  # A getter to get the radius
+        return self._radius
+
+    @radius.setter
+    def radius(self, value):  # A setter to set the radius
+        if value <= 0:
+            raise ValueError('Radius must be positive')
+        self._radius = value
+
+my_circle = Circle(3)
+print('Initial radius:', my_circle.radius) # Initial radius: 3
+
+my_circle.radius = 8
+print('After modifying the radius:', my_circle.radius) # After modifying the radius: 8
+```
+
+- **How Python Handles Getters and Setters**: Once you define getters and setters, Python automatically calls them under the hood whenever you use normal attribute syntax this way:
+
+```python
+my_circle.radius # This will call the getter
+my_circle.radius = 4 # This will call the setter
+```
+
+Inside the setter, you should not assign to the property name itself because that will cause a `RecursionError`.
+
+- **Deleter**: After setting and getting a value with setter and getter, you can control how it is deleted with a `deleter`. A deleter runs custom logic when you use the `del` statement on a property. To create a deleter, you use the `@<property_name>.deleter` decorator.
+
+```python
+# Deleter
+    @radius.deleter
+    def radius(self):
+        print("Deleting radius...")
+        del self._radius
+```
+
+### Inheritance
+
+- **Inheritance**: The process by which a child class uses the attributes and methods of a parent class. Inheritance promotes code reuse, provides clear hierarchies, and customizes behavior without rewriting everything. To implement inheritance, a child class takes in the name of a parent class:
+
+```python
+class Parent:
+    # Parent attributes and methods
+
+class Child(Parent):
+    # Child inherits, extends, and/or overrides where necessary
+```
+
+- **Single and Multiple Inheritance**: When a child class inherits properties and methods from a single parent, as you can see above, the process is called **single inheritance**. When a child class inherits properties and methods from more than one parent, that is **multiple inheritance**. Here's the syntax for that:
+
+```python
+class Parent:
+    # Attributes and methods for Parent
+
+class Child:
+    # Attributes and methods for Child
+
+class GrandChild(Parent, Child):
+    # GrandChild inherits from both Parent and Child
+    # GrandChild can combine or override behavior from each
+```
+
+- **`super()` Function**: A function that lets you call a method from a parent class, when a class has a different implementation of that method, or it extends the method, without duplicating code.
+
+### Polymorphism
+
+- **Polymorphism**: The OOP principle that lets different classes use the same method name, but each class implements it differently when called. Here's the syntax for it:
+
+```python
+class A:
+   def action(self): ...
+
+class B:
+   def action(self): ...
+
+class C:
+   def action(self): ...
+
+Class().method()  # Works for A, B, or C
+```
+
+- **Inheritance-based polymorphism**: A parent sets up a method, and each child class twists it to their use.
+
+### Name Mangling
+
+- **Name Mangling**: A process in which Python internally renames an attribute prefixed with a double underscore by adding an underscore and the class name as a prefix, turning `__attribute` into `_ClassName__attribute`.
+
+- **The Purpose of Name Mangling**: The main purpose of name mangling is to prevent accidental attribute and method overriding when you use inheritance. Here's a code example that makes that more understandable:
+
+```python
+class Parent:
+    def __init__(self):
+        self.__data = 'Parent data'
+
+class Child(Parent):
+    def __init__(self):
+        super().__init__()
+        self.__data = 'Child data'
+
+c = Child()
+print(c.__dict__) # {'_Parent__data': 'Parent data', '_Child__data': 'Child data'}
+```
+
+```python
+class Parent:
+    def __init__(self):
+        self.__data = 'Parent data'
+
+class Child(Parent):
+    def __init__(self):
+        super().__init__()
+        self.__data = 'Child data'
+
+c = Child()
+print(c.__dict__) # {'_Parent__data': 'Parent data', '_Child__data': 'Child data'}
+```
+
+### Abstraction
+
+- **Abstraction**: A programming concept in which complex implementation details of an object or system are hidden and only the essential features are shown. In Python and other programming languages, abstraction simplifies complex systems by increasing reusability.
+
+- **Example of Abstraction**: A good example of abstraction in everyday life is a car letting you just use the wheel, pedals, and shifter without knowing how the engine or brakes work.
+
+- **How Python Implements Abstraction**: You can create abstractions with ordinary functions and classes by hiding implementation details behind a simple interface. For more formal interfaces, Python's `abc` module provides the `ABC` helper class and the `@abstractmethod` decorator. An abstract base class defines the common methods and properties that concrete subclasses are expected to provide.
+
+- **How Abstract Methods Are Defined**: An abstract method is defined with `@abstractmethod`. A class can only be instantiated if it provides or inherits concrete implementations of all its abstract methods. A subclass that leaves any abstract method unimplemented remains abstract. An abstract method can still have a default implementation, which subclasses can call with `super()`. Inheriting from `ABC` alone doesn't block instantiation: `ABC()` and subclasses with no abstract methods can be instantiated. The basic syntax of abstraction looks like this:
+
+```python
+from abc import ABC, abstractmethod
+
+# Define an abstract base class
+class AbstractClass(ABC):
+    @abstractmethod
+    def abstract_method(self):
+        pass
+
+# Concrete subclass that implements the abstract method
+class ConcreteClassOne(AbstractClass):
+    def abstract_method(self):
+        print('Implementation in ConcreteClassOne')
+
+# Another concrete subclass
+class ConcreteClassTwo(AbstractClass):
+    def abstract_method(self):
+        print('Implementation in ConcreteClassTwo')
+
+AbstractClass() # TypeError
+ConcreteClassOne().abstract_method() # Implementation in ConcreteClassOne
+```
+
+# Working with Dates and Times
+
+- **Getting the Current Date and Time**: Calling `datetime.datetime.now()` returns the current date and time as a `datetime` object.
+
+- **Storing a Timestamp on an Instance**: Call `datetime.datetime.now()` inside `__init__()` and assign the result to an attribute to record when the object was created.
+
+```python
+import datetime
+
+class Email:
+    def __init__(self, body):
+        self.body = body
+        self.timestamp = datetime.datetime.now()
+```
+
+- **Formatting with strftime()**: The `strftime()` method turns a `datetime` object into a `string`, using format codes: `%Y` for the four-digit year, `%m` for the month, `%d` for the day, `%H` for the hour (24-hour clock), `%M` for the minutes, and `%S` for the seconds. Any other characters, such as -, /, :, or spaces, are kept as literal separators.
+
+```python
+email = Email('Hello!')
+
+print(email.timestamp.strftime('%Y-%m-%d %H:%M:%S'))  # 2026-11-02 14:30:05
+print(email.timestamp.strftime('%d/%m/%Y'))           # 02/11/2026
+```
