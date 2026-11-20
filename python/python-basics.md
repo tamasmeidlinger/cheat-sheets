@@ -1,7 +1,5 @@
 # Todo
 
-- [ ] vars() builtins
-- [ ] zip() builtins
 - [ ] split() limit
 - [ ] generator expressions
 - [ ] OOP
@@ -918,6 +916,90 @@ b = int("-2")
 
 print(id(a)) # 4389577432 for example
 print(id(b)) # 4389577400 for example
+```
+
+## vars()
+
+**vars()** - Return the `__dict__` attribute for a module, class, instance, or any other object with a `__dict__` attribute. It contains its attributes as a dictionary (key-value pairs).
+
+Without an argument, `vars()` acts like `locals()`
+
+**-- Inspect local variables --**
+
+```python
+name = "Tamas"
+age = 25
+
+print(vars())
+
+# {'__name__': '__main__', ... '__file__': '/Users/tamasm/code/py-js-test/test.py', 'name': 'Tamas', 'age': 25}
+```
+
+**-- Inspect an object's attributes  --**
+
+```python
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+
+person = Person("Tamas", 25)
+
+print(vars(person))
+# {'name': 'Tamas', 'age': 25}
+
+# Access individual attributes through the dictionary
+print(vars(person)["name"])  # Tamas
+print(vars(person)["age"])  # 25
+
+# Modify an object's attributes
+vars(person)["age"] = 26
+print(person.age)  # 26
+```
+
+## zip()
+`zip()` - Iterate over several iterables in parallel, producing tuples with an item from each one.
+
+By default, `zip()` stops when the shortest iterable is exhausted.
+
+```python
+fruits = ["orange", "banana", "strawberry", "kiwi"]
+nums = (1, 2, 3)
+
+for num, fruit in zip(nums, fruits):
+    print(f"{num}: {fruit}")
+
+# 1: orange
+# 2: banana
+# 3: strawberry
+```
+
+```python
+fruits = ["orange", "banana", "strawberry", "kiwi"]
+nums = (1, 2, 3)
+
+try:
+    merged = zip(nums, fruits, strict=True)
+    print(list(merged))
+    # IMPORTANT
+    # If not converted to list for example it just prints:
+    # <zip object at 0x107c47c40>
+except ValueError:
+    print("One of the collections has more items than the other")
+
+# One of the collections has more items than the other
+```
+
+```python
+# Unpacking
+x = [1, 2, 3]
+y = [4, 5, 6]
+list(zip(x, y))
+# [(1, 4), (2, 5), (3, 6)]
+
+x2, y2 = zip(*zip(x, y))
+print(x2, y2)  # (1, 2, 3) (4, 5, 6)
 ```
 
 # Typing
