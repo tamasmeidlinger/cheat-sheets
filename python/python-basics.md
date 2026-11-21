@@ -1,10 +1,6 @@
 # Todo
 
-- [ ] split() limit
-- [ ] generator expressions
-- [ ] OOP
 - [ ] Python import path - how to add things
-- [ ] Python Standard Library
 - [ ] dataclass
 - [ ] sys
 - path
@@ -717,6 +713,19 @@ food = {
 food_vegetable = {key: value for key, value in food.items() if value == "vegetable"}
 
 print(food_vegetable)  # {'carrot': 'vegetable', 'cabbage': 'vegetable'}
+```
+
+## Generator expressions
+
+Creates a **generator object** that generates values one at a time, on demand, by iterating over an iterable and optionally applying an expression and filtering condition.
+
+```python
+from math import floor
+
+prices = (100, 150, 50, 125, 175)
+
+print(sum(prices))  # 600
+print(sum(floor(price * 0.9) for price in prices if price > 50))  # 494
 ```
 
 # Built-ins
