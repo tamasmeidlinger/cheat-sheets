@@ -747,3 +747,49 @@ file.write_bytes(b"Hello, world!")
 - The parent directory must already exist.
 - Requires a `bytes` object, usually written with the `b` prefix.
 - Returns the number of bytes written.
+
+## `pathlib` vs `os.path`
+
+### Comparison
+
+| `pathlib` | `os.path` | Description |
+|---|---|---|
+| `Path()` | — | Create a `Path` object |
+| `Path.cwd()` | `os.getcwd()` | Get current working directory |
+| `Path.home()` | `os.path.expanduser("~")` | Get home directory |
+| `/` operator | `os.path.join()` | Join path components |
+| `.exists()` | `os.path.exists()` | Check if path exists |
+| `.is_file()` | `os.path.isfile()` | Check if path is a file |
+| `.is_dir()` | `os.path.isdir()` | Check if path is a directory |
+| `.name` | `os.path.basename()` | Get final path component |
+| `.parent` | `os.path.dirname()` | Get parent directory |
+| `.suffix` | `os.path.splitext()` | Get file extension (with `os.path`, returns a tuple) |
+| `.stem` | `os.path.splitext()` | Get filename without extension (with `os.path`, returns a tuple) |
+| `.resolve()` | `os.path.realpath()` | Resolve absolute path and symbolic links |
+| `.relative_to()` | `os.path.relpath()` | Get relative path (different behaviour) |
+
+### Key differences
+
+| `pathlib` | `os.path` |
+|---|---|
+| Object-oriented | Function-based |
+| Works with `Path` objects | Primarily works with strings |
+| Uses `/` to join paths | Uses `os.path.join()` |
+| Combines path manipulation and filesystem operations | Focuses on path manipulation |
+| Generally more readable | Common in older Python code |
+
+**-- Example: Joining paths --**
+
+```python
+from pathlib import Path
+import os
+
+# pathlib
+config = Path.home() / ".config" / "nvim"
+
+# os.path
+home = os.path.expanduser("~")
+config = os.path.join(home, ".config", "nvim")
+```
+
+**Remember:** `pathlib` works with `Path` objects, while `os.path` primarily works with strings.
