@@ -1,59 +1,14 @@
-- [Todo](#todo)
-- [Strings](#strings)
-  - [trim()](#trim)
-  - [replace() / replaceAll()](#replace--replaceall)
-  - [split()](#split)
-  - [join()](#join)
-  - [startsWith() \& endsWith()](#startswith--endswith)
-  - [indexOf()](#indexof)
-  - [includes()](#includes)
-  - [slice()](#slice)
-  - [repeat()](#repeat)
-  - [toUpperCase() \& toLowerCase()](#touppercase--tolowercase)
-- [Arrays](#arrays)
-  - [Adding elements](#adding-elements)
-    - [push()](#push)
-    - [Extending arrays using `push()`](#extending-arrays-using-push)
-    - [unshift()](#unshift)
-  - [Remove elements](#remove-elements)
-    - [pop()](#pop)
-    - [shift()](#shift)
-  - [splice() - insert, replace, remove elements](#splice---insert-replace-remove-elements)
-  - [Other](#other)
-    - [indexOf()](#indexof-1)
-    - [includes()](#includes-1)
-    - [concat()](#concat)
-    - [slice()](#slice-1)
-  - [Spread Syntax](#spread-syntax)
-  - [Shallow Copy](#shallow-copy)
-  - [Array Destructuring](#array-destructuring)
-- [Objects](#objects)
-  - [Definition](#definition)
-  - [Set a Property of an Existing Object](#set-a-property-of-an-existing-object)
-  - [Removing Properties From an Object](#removing-properties-from-an-object)
-    - [`delete` operator](#delete-operator)
-  - [Checking if an Object has a Property](#checking-if-an-object-has-a-property)
-    - [Object.hasOwn()](#objecthasown)
-    - [hasOwnProperty()](#hasownproperty)
-    - [`in` Operator](#in-operator)
-  - [Accessing Properties From Nested Objects](#accessing-properties-from-nested-objects)
-  - [Working with the Optional Chaining Operator `?.`](#working-with-the-optional-chaining-operator-)
-  - [Object Methods](#object-methods)
-  - [Object Destructuring](#object-destructuring)
-  - [Working with JSON](#working-with-json)
-    - [JSON.stringify()](#jsonstringify)
-    - [JSON.parse()](#jsonparse)
-
-
 ## Todo
 
 1. str.replace() and replaceAll() regular expression
 2. counting character occurences - regular expression
- ```typescript
+
+```typescript
 const city = "Los Angeles";
 
 console.log(city.match(/e/g)?.length ?? 0); // 2
 ```
+
 3. counting substring occurences
 
 ```typescript
@@ -63,11 +18,13 @@ const count = greeting.split("hello").length - 1;
 
 console.log(count); // 2
 ```
+
 4. Type casting
 5. TypeScript Typing
 6. imports/exports
 
 - [ ] Terminology and Other [Source](https://www.freecodecamp.org/learn/javascript-v9/review-javascript-fundamentals/review-javascript-fundamentals)
+
 7. Closures
 8. Hoisting and var Keyword
 
@@ -290,7 +247,6 @@ desserts.shift();
 console.log(desserts); // ["cookies", "pie"];
 ```
 
-
 ### splice() - insert, replace, remove elements
 
 **splice()** - can insert, replace, or remove elements at a specified index
@@ -469,10 +425,10 @@ An object is a **data structure** that is made up of **properties**. A property 
 const person = {
   name: "Alice",
   age: 30,
-  city: "New York"
+  city: "New York",
 };
 
-console.log(person.name);  // Alice
+console.log(person.name); // Alice
 console.log(person["name"]); // Alice
 ```
 
@@ -481,12 +437,12 @@ console.log(person["name"]); // Alice
 ```typescript
 const person = {
   name: "Alice",
-  age: 30
+  age: 30,
 };
 
-person.job = "Engineer"
-person["hobby"] = "Knitting"
-console.log(person);  // {name: 'Alice', age: 30, job: 'Engineer', hobby: 'Knitting'}
+person.job = "Engineer";
+person["hobby"] = "Knitting";
+console.log(person); // {name: 'Alice', age: 30, job: 'Engineer', hobby: 'Knitting'}
 ```
 
 ### Removing Properties From an Object
@@ -499,7 +455,7 @@ console.log(person);  // {name: 'Alice', age: 30, job: 'Engineer', hobby: 'Knitt
 const person = {
   name: "Alice",
   age: 30,
-  job: "Engineer"
+  job: "Engineer",
 };
 
 delete person.job;
@@ -522,7 +478,7 @@ This makes it safer than `hasOwnProperty()` and more reliable than `if (obj.prop
 ```typescript
 const person = {
   name: "Alice",
-  age: 30
+  age: 30,
 };
 
 console.log(Object.hasOwn(person, "name")); // true
@@ -535,13 +491,13 @@ A more detailed example showing why Object.hasOwn() is more reliable than checki
 const settings = {
   darkMode: false,
   fontSize: 0,
-  language: null
+  language: null,
 };
 
 // Object.hasOwn() correctly sees these properties exist
 console.log(Object.hasOwn(settings, "darkMode")); // true (value is false, but exists)
 console.log(Object.hasOwn(settings, "fontSize")); // true (value is 0, but exists)
-console.log(Object.hasOwn(settings, "theme"));    // false (property was never added)
+console.log(Object.hasOwn(settings, "theme")); // false (property was never added)
 
 // Using if() directly is unsafe for falsy values!
 if (settings.darkMode) {
@@ -561,7 +517,7 @@ if (Object.hasOwn(settings, "darkMode")) {
 ```typescript
 const person = {
   name: "Alice",
-  age: 30
+  age: 30,
 };
 
 console.log(person.hasOwnProperty("name")); // true
@@ -570,15 +526,15 @@ console.log(person.hasOwnProperty("job")); // false
 
 #### `in` Operator
 
-*`in`* - operator will return `true` if the property exists in the object
+_`in`_ - operator will return `true` if the property exists in the object
 
 ```typescript
 const person = {
   name: "Bob",
-  age: 25
+  age: 25,
 };
 
-console.log("name" in person);  // true
+console.log("name" in person); // true
 ```
 
 ### Accessing Properties From Nested Objects
@@ -591,9 +547,9 @@ const person = {
     email: "alice@example.com",
     phone: {
       home: "123-456-7890",
-      work: "098-765-4321"
-    }
-  }
+      work: "098-765-4321",
+    },
+  },
 };
 
 console.log(person.contact.phone.work); // "098-765-4321"
@@ -610,13 +566,13 @@ const user = {
     email: "john@example.com",
     address: {
       street: "123 Main St",
-      city: "Somewhere"
-    }
-  }
+      city: "Somewhere",
+    },
+  },
 };
 
 console.log(user.profile?.address?.street); // "123 Main St"
-console.log(user.profile?.phone?.number);   // undefined
+console.log(user.profile?.phone?.number); // undefined
 ```
 
 ### Object Methods
@@ -625,9 +581,9 @@ console.log(user.profile?.phone?.number);   // undefined
 const person = {
   name: "Bob",
   age: 30,
-  sayHello: function() {
+  sayHello: function () {
     return "Hello, my name is " + this.name;
-  }
+  },
 };
 
 console.log(person.sayHello()); // "Hello, my name is Bob"
@@ -641,7 +597,7 @@ const person = { name: "Alice", age: 30, city: "New York" };
 const { name, age } = person;
 
 console.log(name); // Alice
-console.log(age);  // 30
+console.log(age); // 30
 ```
 
 ### Working with JSON
@@ -654,7 +610,7 @@ console.log(age);  // 30
 const user = {
   name: "John",
   age: 30,
-  isAdmin: true
+  isAdmin: true,
 };
 
 const jsonString = JSON.stringify(user);

@@ -1,30 +1,3 @@
-- [TODO](#todo)
-- [Images](#images)
-  - [List Local Images](#list-local-images)
-  - [Delete an Image](#delete-an-image)
-  - [Remove all unused images](#remove-all-unused-images)
-  - [Build an Image from a Dockerfile](#build-an-image-from-a-dockerfile)
-- [Containers](#containers)
-  - [List Currently Running Containers](#list-currently-running-containers)
-  - [List All Docker Container](#list-all-docker-container)
-  - [Remove a stopped container](#remove-a-stopped-container)
-  - [Start or stop an existing container](#start-or-stop-an-existing-container)
-  - [Create and run a container from an image, with a custom name](#create-and-run-a-container-from-an-image-with-a-custom-name)
-  - [Run a container with and publish a container’s port(s) to the host](#run-a-container-with-and-publish-a-containers-ports-to-the-host)
-  - [Run a container in the background](#run-a-container-in-the-background)
-  - [Run an image in interactively](#run-an-image-in-interactively)
-  - [Start an stopped container interactively](#start-an-stopped-container-interactively)
-  - [Open a shell inside a running container](#open-a-shell-inside-a-running-container)
-  - [Automatically delete a container when it stops](#automatically-delete-a-container-when-it-stops)
-- [Flags](#flags)
-  - [Environment Variables](#environment-variables)
-- [Dockerfile](#dockerfile)
-  - [Syntax](#syntax)
-  - [Examples](#examples)
-    - [Dockarize a React app](#dockarize-a-react-app)
-    - [Spin up a Postgres DB](#spin-up-a-postgres-db)
-- [USEFUL](#useful)
-
 ## TODO
 
 - [ ] Continue from volumes
@@ -201,6 +174,7 @@ COPY ./initial-seed.sql /docker-entrypoint-initdb.d/01-initial-seed.sql
 
 EXPOSE 5432
 ```
+
 **After building the image, spin it up**
 
 ```bash

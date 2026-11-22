@@ -1,58 +1,3 @@
-- [Todo](#todo)
-- [Key Concepts](#key-concepts)
-- [Order of execution of a Query](#order-of-execution-of-a-query)
-- [Data Definition Language](#data-definition-language)
-  - [CREATE](#create)
-    - [Create Table](#create-table)
-  - [DROP](#drop)
-    - [Drop Table](#drop-table)
-  - [TRUNCATE](#truncate)
-  - [ALTER](#alter)
-    - [Rename Database/Table](#rename-databasetable)
-    - [Add Column to Existing Table](#add-column-to-existing-table)
-    - [Drop a Column From an Existing Table](#drop-a-column-from-an-existing-table)
-    - [Add a Column With a Constraint](#add-a-column-with-a-constraint)
-    - [Add a Primary Key to a Table](#add-a-primary-key-to-a-table)
-    - [Add a Foreign Key Column](#add-a-foreign-key-column)
-    - [Drop a Constraint](#drop-a-constraint)
-- [Data Manipulation Language](#data-manipulation-language)
-  - [SELECT](#select)
-  - [Queries with constraints](#queries-with-constraints)
-    - [WHERE](#where)
-    - [Operators](#operators)
-  - [Filtering and sorting Query results](#filtering-and-sorting-query-results)
-    - [DISTINCT](#distinct)
-    - [ORDER BY](#order-by)
-    - [LIMIT \& OFFSET](#limit--offset)
-  - [Queries with aggregates](#queries-with-aggregates)
-    - [Common aggregate functions](#common-aggregate-functions)
-    - [GROUP BY](#group-by)
-    - [HAVING](#having)
-  - [JOINs](#joins)
-    - [INNER JOIN](#inner-join)
-    - [OUTER JOINs](#outer-joins)
-  - [INSERT](#insert)
-  - [UPDATE](#update)
-  - [DELETE](#delete)
-- [Data Types](#data-types)
-- [Constraints](#constraints)
-  - [CHECK](#check)
-  - [NOT NULL](#not-null)
-  - [UNIQUE](#unique)
-  - [PRIMARY KEY](#primary-key)
-  - [FOREIGN KEYS](#foreign-keys)
-- [Identity Columns](#identity-columns)
-  - [GENERATED AS IDENTITY](#generated-as-identity)
-- [psql](#psql)
-  - [Login Command](#login-command)
-  - [List All Databases](#list-all-databases)
-  - [Connect to Database](#connect-to-database)
-  - [Create a Database](#create-a-database)
-  - [List All Relations](#list-all-relations)
-  - [List All Tables](#list-all-tables)
-  - [Display schema/structure of a table](#display-schemastructure-of-a-table)
-  - [Quit](#quit)
-
 ## Todo
 
 - [ ] Subqueries
@@ -133,21 +78,23 @@ FROM mytable
 ```
 
 <!-- ```mermaid -->
+
 flowchart TD
-    A["1. FROM and JOINs"] -->|"Working set of rows assembled"| B["2. WHERE"]
-    B -->|"Rows filtered by conditions"| C["3. GROUP BY"]
-    C -->|"Rows grouped by common values"| D["4. HAVING"]
-    D -->|"Groups filtered by conditions"| E["5. SELECT"]
-    E -->|"Expressions computed; columns selected"| F["6. DISTINCT"]
-    F -->|"Duplicate rows removed"| G["7. ORDER BY"]
-    G -->|"Rows sorted"| H["8. LIMIT / OFFSET"]
-    H -->|"Requested range of rows retained"| I(["Final Result"])
+A["1. FROM and JOINs"] -->|"Working set of rows assembled"| B["2. WHERE"]
+B -->|"Rows filtered by conditions"| C["3. GROUP BY"]
+C -->|"Rows grouped by common values"| D["4. HAVING"]
+D -->|"Groups filtered by conditions"| E["5. SELECT"]
+E -->|"Expressions computed; columns selected"| F["6. DISTINCT"]
+F -->|"Duplicate rows removed"| G["7. ORDER BY"]
+G -->|"Rows sorted"| H["8. LIMIT / OFFSET"]
+H -->|"Requested range of rows retained"| I(["Final Result"])
 
     classDef step fill:#e8f0fe,stroke:#4285f4,color:#1a1a1a
     classDef result fill:#d9ead3,stroke:#6aa84f,color:#1a1a1a
 
     class A,B,C,D,E,F,G,H step
     class I result
+
 <!-- ``` -->
 
 Each query begins with **finding** the data that we need in a database, and then **filtering** that data down into something that can be processed and understood as quickly as possible.

@@ -1,48 +1,3 @@
-- [To-dos](#to-dos)
-  - [Git config setup](#git-config-setup)
-  - [Look into](#look-into)
-- [Git Config](#git-config)
-  - [Set username and email](#set-username-and-email)
-  - [Display settings](#display-settings)
-- [Basic Git](#basic-git)
-  - [Show commit log](#show-commit-log)
-  - [Differences](#differences)
-  - [Rename files](#rename-files)
-- [Undoing changes](#undoing-changes)
-  - [Remove untracked files from working tree](#remove-untracked-files-from-working-tree)
-  - [Discard changes in working directory](#discard-changes-in-working-directory)
-  - [Unstage files](#unstage-files)
-  - [Restore files to working tree](#restore-files-to-working-tree)
-  - [Reverting commits](#reverting-commits)
-  - [Resetting Commits](#resetting-commits)
-- [Branching](#branching)
-  - [List branches](#list-branches)
-  - [Create a branch](#create-a-branch)
-  - [Start working on a new remote branch](#start-working-on-a-new-remote-branch)
-  - [Rename a branch](#rename-a-branch)
-  - [Switch to branch](#switch-to-branch)
-  - [Delete a branch](#delete-a-branch)
-  - [Merge a branch](#merge-a-branch)
-  - [Resolve a merge conflict](#resolve-a-merge-conflict)
-  - [Rebase a branch](#rebase-a-branch)
-- [Remote repository](#remote-repository)
-  - [List remote repositories](#list-remote-repositories)
-  - [Add a remote repository](#add-a-remote-repository)
-  - [Push to a remote repository](#push-to-a-remote-repository)
-  - [Rename local and remote branch](#rename-local-and-remote-branch)
-  - [Fetching remote branches](#fetching-remote-branches)
-  - [Pulling remote branches](#pulling-remote-branches)
-  - [Rebase Fails Due to Differences in Commit History](#rebase-fails-due-to-differences-in-commit-history)
-  - [Change the remote to SSH](#change-the-remote-to-ssh)
-- [Managing Git History](#managing-git-history)
-  - [Amending the last commit](#amending-the-last-commit)
-  - [Rebasing commits](#rebasing-commits)
-  - [Squash commits](#squash-commits)
-  - [Exit rebase](#exit-rebase)
-- [Merging Strategies](#merging-strategies)
-  - [Fast-forward merge vs. non-fast-forward merge](#fast-forward-merge-vs-non-fast-forward-merge)
-  - [Rebase](#rebase)
-
 Main source of reference [nulab](https://nulab.com/learn/software-development/git-tutorial/git-collaboration/integrating-branches/)
 
 ## To-dos
@@ -61,7 +16,6 @@ Main source of reference [nulab](https://nulab.com/learn/software-development/gi
 - [ ] stashing
 - [ ] best practices - fetch
 - [ ] best practices - pull
-
 
 ## Git Config
 
@@ -210,11 +164,11 @@ Used primarily **to undo local commits that have not yet been pushed to a remote
 
 Three primary modes: `--soft`, `--mixed`, and `--hard`
 
-| Mode name | Index | Work tree |
-|:---------:|:-----:|:---------:|
-| soft | unchanged | unchanged |
-| mixed (default) | change | unchanged |
-| hard | change | change |
+|    Mode name    |   Index   | Work tree |
+| :-------------: | :-------: | :-------: |
+|      soft       | unchanged | unchanged |
+| mixed (default) |  change   | unchanged |
+|      hard       |  change   |  change   |
 
 ## Branching
 
@@ -300,7 +254,6 @@ git rebase --abort
 
 By adding the `--abort` option, you can exit the rebase operation.
 
-
 ## Remote repository
 
 ### List remote repositories
@@ -326,6 +279,7 @@ git remote add origin <link>
 ```bash
 git push -u origin main
 ```
+
 1. `git push` - Upload your local commits to a remote repository.
 2. `-u` - Short for `--set-upstream`. - Sets the upstream branch for your local branch, telling Git which remote branch it should track by default.
 3. `origin` - The name of your remote repository.
