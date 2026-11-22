@@ -483,6 +483,14 @@ echo ${RESPONSES[@]}     # Yes No Maybe Ask again later
 echo ${RESPONSES[*]}     # Yes No Maybe Ask again later
 ```
 
+### Get the number of items in an array
+
+```bash
+fruits=("mango" "banana" "orange")
+
+echo ${#fruits[@]} # 3
+```
+
 ## Array expansion
 
 **Array expansion**: Use `"${array_name[@]}"`, `${array_name[@]}` syntax to expand an array into individual elements.
@@ -541,3 +549,62 @@ MY_FUNCTION hello again
 ```
 
 # Random Numbers and Mathematical Operations
+
+## Random numbers
+
+**Random numbers**: Generate random values using the `$RANDOM` variable.
+
+- `$RANDOM` generates numbers between 0 and 32767
+- Use modulo operator to limit range: `$RANDOM % 75`
+- Add 1 to avoid zero: `$(( RANDOM % 75 + 1 ))`
+- Must use `$(( ... ))` syntax for calculations with `$RANDOM`
+
+```bash
+NUMBER=$(( RANDOM % 6 ))
+DICE=$(( RANDOM % 6 + 1 ))
+BINGO=$(( RANDOM % 75 + 1 ))
+echo $(( RANDOM % 10 ))
+```
+
+```bash
+# Get a random fruit from the array
+fruits=("mango" "banana" "orange")
+
+#1
+echo ${fruits[$(( RANDOM % ${#fruits[@]} ))]}
+
+#2
+random_num=$(( RANDOM % ${#fruits[@]} ))
+echo ${fruits[$random_num]}
+```
+
+# Environment and System Information
+
+## Environment variables
+
+**Environment variables**: Predefined variables available in the shell environment.
+
+- `$RANDOM`: Generates random numbers between 0 and 32767
+- `$LANG`: System language setting
+- `$HOME`: User's home directory path
+- `$PATH`: Directories searched for executable commands
+- View all with `printenv` or `declare -p`
+
+## Command Types
+
+**Command types**: Different categories of commands available in bash.
+
+- **Built-in commands**: Executed directly by the shell (e.g., `echo`, `read`, `if`)
+- **External commands**: Binary files in system directories (e.g., `ls`, `sleep`, `bash`)
+- **Shell keywords**: Language constructs (e.g., `then`, `do`, `done`)
+- Use `type <command>` to see what type a command is
+
+```bash
+type echo
+type ls
+type if
+
+# echo is a shell builtin
+# ls is /bin/ls
+# if is a shell keyword
+```
