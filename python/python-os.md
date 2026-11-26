@@ -2,6 +2,14 @@
 
 - [ ] shutil
 - [ ] os
+- platform
+- [ ] subprocess
+- sys.path.append(os.path.dirname(**file**))
+- [ ] special variable like **file**
+- [ ] file openings
+- [ ] function args and kwargs spreading and stuff
+- [ ] Add the below example, why does this work
+- [ ] sys
 
 # `pathlib` – Paths and Navigation
 
